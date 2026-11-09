@@ -1,0 +1,30 @@
+plugins {
+    id 'org.springframework.boot' version '4.1.2' apply false
+    id 'io.spring.dependency-management' version '1.1.7' apply false
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group = 'jongg.pf'
+    version = '0.0.1-SNAPSHOT'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(27)
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        set('springCloudVersion', "2025.1.4")
+    }
+
+    tasks.withType(Test).configureEach {
+        enabled = false
+    }
+}
+

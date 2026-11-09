@@ -1,0 +1,4 @@
+# Root project .gitignore
+.gradle/
+.idea/
+build/

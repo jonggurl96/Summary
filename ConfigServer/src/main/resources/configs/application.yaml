@@ -1,0 +1,12 @@
+# Config Client Global Properties
+
+logging:
+  level:
+    root: INFO
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      default-zone: http://localhost:18761/eureka

@@ -1,0 +1,5 @@
+rootProject.name = 'Summary'
+
+include 'ApiGateway'
+include 'ConfigServer'
+include 'DiscoveryServer'
