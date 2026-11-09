@@ -6,9 +6,6 @@ plugins {
 subprojects {
     apply plugin: 'java'
 
-    group = 'jongg.pf'
-    version = '0.0.1-SNAPSHOT'
-
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(27)

@@ -4,6 +4,8 @@ plugins {
     id 'io.spring.dependency-management'
 }
 
+group = 'jongg.pf'
+version = '0.0.1-SNAPSHOT'
 description = 'ApiGateway'
 
 dependencies {
