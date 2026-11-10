@@ -1,6 +1,12 @@
 module.exports = {
 	generator: serviceName => ({
-		branches : ['main'],
+		branches : [
+			'main',
+			{
+				name      : 'next',
+				prerelease: 'beta'
+			}
+		],
 		extends  : ['semantic-release-monorepo'],
 		tagFormat: serviceName + '-v${version}',
 
@@ -82,8 +88,9 @@ module.exports = {
 							label: `${serviceName} JAR`
 						}
 					],
-					successComment: false,
-					failComment   : false
+					successComment: 'Release ${nextRelease.version} published.',
+					failComment   : 'Release ${nextRelease.version} failed.',
+					releasedLabels: ['released', 'beta']
 				}
 			]
 		]

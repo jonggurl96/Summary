@@ -1,2 +1,2 @@
-const { generator } = require('../release-common.config');
+const { generator } = require('../release-common.config.cjs');
 module.exports = generator('DiscoveryServer');
