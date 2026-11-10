@@ -5,7 +5,6 @@ plugins {
 }
 
 group = 'jongg.pf'
-version = '0.0.1-SNAPSHOT'
 description = 'ConfigServer'
 
 dependencies {

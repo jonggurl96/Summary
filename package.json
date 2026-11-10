@@ -1,0 +1,32 @@
+{
+	"name": "summary",
+	"version": "1.0.0",
+	"description": "공부한 내용 정리 및 실습 프로젝트.",
+	"homepage": "https://github.com/jonggurl96/Summary#readme",
+	"bugs": {
+		"url": "https://github.com/jonggurl96/Summary/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jonggurl96/Summary.git"
+	},
+	"license": "ISC",
+	"author": "",
+	"type": "commonjs",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"test.\\n\""
+	},
+	"keywords": [],
+	"devDependencies": {
+		"@semantic-release/changelog": "^6.0.3",
+		"@semantic-release/commit-analyzer": "^13.0.1",
+		"@semantic-release/exec": "^7.1.0",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^12.0.10",
+		"@semantic-release/release-notes-generator": "^14.1.1",
+		"conventional-changelog-conventionalcommits": "^10.4.1",
+		"semantic-release": "^25.0.9",
+		"semantic-release-monorepo": "^8.0.2"
+	}
+}

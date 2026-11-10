@@ -1,0 +1,54 @@
+name: Summary releases
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: service-releases-main
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+      - uses: actions/setup-java@v6
+        with:
+          java-version: 27
+          distribution: 'oracle-openjdk'
+          cache: 'gradle'
+      - name: Install release tools
+        run: npm ci
+      - name: Make Gradle wrapper executable
+        run: chmod +x gradlew
+      - name: Test all modules
+        run: ./gradlew test
+      - name: Release services
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          services=(
+          "ApiGateway"
+          "ConfigServer"
+          "DiscoveryServer"
+          )
+          for service in "${services[@]}"; do
+            echo "::group:: Releasing $service"
+            cd "$service"
+            npx --no-install semantic-release
+            echo "::endgroup::"
+          done
