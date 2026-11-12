@@ -1,0 +1,72 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U myuser -d mydatabase" ]
+      interval: 5s
+      retries: 10
+
+  discovery-server:
+    build:
+      context: .
+      args:
+        MODULE: DiscoveryServer
+    environment:
+      SERVER_PORT: "18761"
+      SPRING_CLOUD_CONFIG_ENABLED: "false"
+      SPRING_CLOUD_SERVICE_REGISTRY_AUTO_REGISTRATION_ENABLED: "false"
+    ports:
+      - "18761:18761"
+
+  config-server:
+    build:
+      context: .
+      args:
+        MODULE: ConfigServer
+    environment:
+      SERVER_PORT: "28888"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:18761/eureka/
+    depends_on:
+      - discovery-server
+    ports:
+      - "28888:28888"
+
+  api-gateway:
+    build:
+      context: .
+      args:
+        MODULE: ApiGateway
+    environment:
+      SERVER_PORT: "18081"
+      SPRING_CLOUD_CONFIG_ENABLED: "false"
+      SPRING_MAIN_WEB_APPLICATION_TYPE: reactive
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydatabase
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: secret
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:18761/eureka/
+    depends_on:
+      postgres:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    ports:
+      - "18081:18081"
+
+  proxy:
+    image: nginx:stable-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./proxy/conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./proxy/conf/proxy.conf:/etc/nginx/proxy.conf:ro
+    depends_on:
+      - api-gateway
+
+volumes:
+  postgres-data:
