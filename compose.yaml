@@ -65,6 +65,8 @@ services:
     volumes:
       - ./proxy/conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./proxy/conf/proxy.conf:/etc/nginx/proxy.conf:ro
+      - ./proxy/conf/assets.conf:/etc/nginx/assets.conf:ro
+      - ./proxy/assets/:/usr/bin/assets/:ro
     depends_on:
       - api-gateway
 
