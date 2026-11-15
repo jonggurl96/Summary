@@ -9,4 +9,4 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      default-zone: http://localhost:18761/eureka
+      default-zone: "${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:18761/eureka}"

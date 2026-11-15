@@ -44,12 +44,13 @@ services:
         MODULE: ApiGateway
     environment:
       SERVER_PORT: "18081"
-      SPRING_CLOUD_CONFIG_ENABLED: "false"
+      SPRING_CLOUD_CONFIG_ENABLED: "true"
       SPRING_MAIN_WEB_APPLICATION_TYPE: reactive
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydatabase
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: secret
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:18761/eureka/
+      CONFIG_SERVER_URL: http://config-server:28888
     depends_on:
       postgres:
         condition: service_healthy

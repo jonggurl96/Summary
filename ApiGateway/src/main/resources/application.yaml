@@ -1,5 +1,9 @@
-server.port: 18081
+server:
+  port: 18081
 
 spring:
   application:
     name: ApiGateway
+  config:
+    import:
+      - "${CONFIG_SERVER_URL:http://localhost:28888}"
