@@ -4,7 +4,10 @@ server:
 spring:
   application:
     name: DiscoveryServer
+
 eureka:
   client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/
     register-with-eureka: false
     fetch-registry: false

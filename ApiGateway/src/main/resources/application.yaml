@@ -6,4 +6,18 @@ spring:
     name: ApiGateway
   config:
     import:
-      - "${CONFIG_SERVER_URL:http://localhost:28888}"
+      - "configserver:${CONFIG_SERVER_URL:http://localhost:28888}"
+  datasource:
+    url: jdbc:postgresql://192.168.123.167:5432/userservice
+    username: portfolio
+    password: portfolio
+  main:
+    web-application-type: reactive
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#    instance-id: "${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}"
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:18761/eureka/
