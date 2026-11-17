@@ -2,13 +2,17 @@
 -- SYSTEM, ADMIN, 기본계정_01, 테스트계정_01, guest_01
 CREATE TABLE IF NOT EXISTS user_info
 (
-	user_id VARCHAR(20) NOT NULL PRIMARY KEY,
+	user_id VARCHAR(20) NOT NULL
+		PRIMARY KEY,
 	name VARCHAR(20) NOT NULL,
 	nickname VARCHAR(20),
-	login_id VARCHAR(20) NOT NULL UNIQUE,
+	login_id VARCHAR(20) NOT NULL
+		UNIQUE,
 	login_pw VARCHAR(50) NOT NULL,
-	email VARCHAR(20) UNIQUE,
-	mobile VARCHAR(20) UNIQUE,
+	email VARCHAR(20)
+		UNIQUE,
+	mobile VARCHAR(20)
+		UNIQUE,
 	birth_year SMALLINT,
 	birth_month SMALLINT,
 	birth_day SMALLINT,
@@ -18,6 +22,9 @@ CREATE TABLE IF NOT EXISTS user_info
 	login_fail_count SMALLINT NOT NULL DEFAULT 0,
 	last_login_at TIMESTAMPTZ
 );
+
+ALTER TABLE user_info
+	OWNER TO portfolio;
 
 COMMENT ON TABLE user_info IS '사용자 정보';
 COMMENT ON COLUMN user_info.user_id IS '사용자 고유 번호';
@@ -39,11 +46,15 @@ COMMENT ON COLUMN user_info.last_login_at IS '마지막 로그인 일시';
 -- 소셜 로그인 제공자
 CREATE TABLE IF NOT EXISTS social_provider
 (
-	code VARCHAR(10) NOT NULL PRIMARY KEY,
+	code VARCHAR(10) NOT NULL
+		PRIMARY KEY,
 	name VARCHAR(10) NOT NULL,
 	login_txt VARCHAR(20),
 	logo_url TEXT
 );
+
+ALTER TABLE social_provider
+	OWNER TO portfolio;
 
 COMMENT ON TABLE social_provider IS '소셜 로그인 제공자';
 COMMENT ON COLUMN social_provider.code IS '소셜 로그인 제공자 코드';
@@ -54,16 +65,22 @@ COMMENT ON COLUMN social_provider.logo_url IS '소셜 로그인 로고 이미지
 -- 소셜 로그인(구글, 네이버, 카카오)
 CREATE TABLE IF NOT EXISTS social_credential
 (
-	id VARCHAR(20) NOT NULL PRIMARY KEY,
+	id VARCHAR(20) NOT NULL
+		PRIMARY KEY,
 	user_id VARCHAR(20) NOT NULL,
 	provider VARCHAR(10) NOT NULL,
 	provider_user_id VARCHAR(20) NOT NULL,
 	provider_email VARCHAR(20),
 	CONSTRAINT fk_social_credential_user_id
-		FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+		FOREIGN KEY (user_id)
+			REFERENCES user_info (user_id),
 	CONSTRAINT fk_social_credential_provider
-		FOREIGN KEY (provider) REFERENCES social_provider (code)
+		FOREIGN KEY (provider)
+			REFERENCES social_provider (code)
 );
+
+ALTER TABLE social_credential
+	OWNER TO portfolio;
 
 COMMENT ON TABLE social_credential IS '소셜 로그인(구글, 네이버, 카카오)';
 COMMENT ON COLUMN social_credential.id IS '기본키';
@@ -87,10 +104,15 @@ CREATE TABLE IF NOT EXISTS cmmn_code
 	CONSTRAINT pk_cmmn_code_comp_code_parent_code
 		PRIMARY KEY (code, parent_code),
 	CONSTRAINT fk_cmmn_code_created_by
-		FOREIGN KEY (created_by) REFERENCES user_info (user_id),
+		FOREIGN KEY (created_by)
+			REFERENCES user_info (user_id),
 	CONSTRAINT fk_cmmn_code_updated_by
-		FOREIGN KEY (updated_by) REFERENCES user_info (user_id)
+		FOREIGN KEY (updated_by)
+			REFERENCES user_info (user_id)
 );
+
+ALTER TABLE cmmn_code
+	OWNER TO portfolio;
 
 COMMENT ON TABLE cmmn_code IS '공통코드 테이블';
 COMMENT ON COLUMN cmmn_code.code_nm IS '코드명';
@@ -104,7 +126,8 @@ COMMENT ON COLUMN cmmn_code.updated_at IS '수정일시';
 -- 역할테이블
 CREATE TABLE IF NOT EXISTS roles
 (
-	role_id VARCHAR(20) NOT NULL PRIMARY KEY,
+	role_id VARCHAR(20) NOT NULL
+		PRIMARY KEY,
 	parent_role VARCHAR(20),
 	role_description TEXT NOT NULL,
 	use_yn BOOLEAN DEFAULT TRUE,
@@ -114,10 +137,15 @@ CREATE TABLE IF NOT EXISTS roles
 	updated_by VARCHAR(20),
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT fk_roles_created_by
-		FOREIGN KEY (created_by) REFERENCES user_info (user_id),
+		FOREIGN KEY (created_by)
+			REFERENCES user_info (user_id),
 	CONSTRAINT fk_roles_updated_by
-		FOREIGN KEY (updated_by) REFERENCES user_info (user_id)
+		FOREIGN KEY (updated_by)
+			REFERENCES user_info (user_id)
 );
+
+ALTER TABLE roles
+	OWNER TO portfolio;
 
 COMMENT ON TABLE roles IS '역할테이블';
 COMMENT ON COLUMN roles.role_id IS '역할 식별자';
@@ -133,7 +161,8 @@ COMMENT ON COLUMN roles.updated_at IS '수정일시';
 -- 권한테이블
 CREATE TABLE IF NOT EXISTS permissions
 (
-	prmsn_id VARCHAR(50) NOT NULL PRIMARY KEY,
+	prmsn_id VARCHAR(50) NOT NULL
+		PRIMARY KEY,
 	prmsn_description TEXT,
 	use_yn BOOLEAN DEFAULT TRUE,
 	del_yn BOOLEAN DEFAULT FALSE,
@@ -142,10 +171,15 @@ CREATE TABLE IF NOT EXISTS permissions
 	updated_by VARCHAR(20),
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT fk_permissions_created_by
-		FOREIGN KEY (created_by) REFERENCES user_info (user_id),
+		FOREIGN KEY (created_by)
+			REFERENCES user_info (user_id),
 	CONSTRAINT fk_permissions_updated_by
-		FOREIGN KEY (updated_by) REFERENCES user_info (user_id)
+		FOREIGN KEY (updated_by)
+			REFERENCES user_info (user_id)
 );
+
+ALTER TABLE permissions
+	OWNER TO portfolio;
 
 COMMENT ON TABLE permissions IS '권한테이블';
 COMMENT ON COLUMN permissions.prmsn_id IS '[서비스도메인:]리소스:행위[:범위]';
@@ -165,10 +199,15 @@ CREATE TABLE IF NOT EXISTS user_roles
 	CONSTRAINT pk_user_roles_comp_user_id_role_id
 		PRIMARY KEY (user_id, role_id),
 	CONSTRAINT fk_user_roles_user_id
-		FOREIGN KEY (user_id) REFERENCES user_info (user_id),
+		FOREIGN KEY (user_id)
+			REFERENCES user_info (user_id),
 	CONSTRAINT fk_user_roles_role_id
-		FOREIGN KEY (role_id) REFERENCES roles (role_id)
+		FOREIGN KEY (role_id)
+			REFERENCES roles (role_id)
 );
+
+ALTER TABLE user_roles
+	OWNER TO portfolio;
 
 -- 역할권한 테이블
 CREATE TABLE IF NOT EXISTS role_permissions
@@ -178,7 +217,12 @@ CREATE TABLE IF NOT EXISTS role_permissions
 	CONSTRAINT pk_role_permissions_comp_role_id_prmsn_id
 		PRIMARY KEY (role_id, prmsn_id),
 	CONSTRAINT fk_role_permissions_role_id
-		FOREIGN KEY (role_id) REFERENCES roles (role_id),
+		FOREIGN KEY (role_id)
+			REFERENCES roles (role_id),
 	CONSTRAINT fk_role_permissions_prmsn_id
-		FOREIGN KEY (prmsn_id) REFERENCES permissions (prmsn_id)
+		FOREIGN KEY (prmsn_id)
+			REFERENCES permissions (prmsn_id)
 );
+
+ALTER TABLE role_permissions
+	OWNER TO portfolio;
