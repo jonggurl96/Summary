@@ -1,0 +1,122 @@
+* {
+	font-family: "Pretendard Variable", "Pretendard GOV", source-code-pro, -apple-system, sans-serif;
+	font-size: 12px;
+}
+
+body {
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: "Pretendard Variable", "Pretendard GOV", source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* variables */
+:root {
+	/* Warm white backgrounds and near-black text */
+	--foreground: #242424;
+	--foreground-muted: #595650;
+	--foreground-disabled: #7c7871;
+
+	--background: #faf8f3;
+	--surface: #fffdf9;
+	--surface-muted: #f1ede5;
+
+	/* Sky blue controls with dark labels */
+	--button-color: #b4def5;
+	--button-text: #172b38;
+	--button-hover: #98d0ef;
+	--button-active: #7bc1e7;
+	--button-disabled: #e1edf3;
+
+	--border-color: #a8cfe3;
+	--border-subtle: #d3e5ee;
+	--border-strong: #5c9fc4;
+
+	--shadow-color: rgb(66 119 150 / 16%);
+	--shadow-xl: 0 0 20px var(--shadow-color);
+	--shadow-lg: 0 0 10px var(--shadow-color);
+	--shadow-md: 0 0 5px var(--shadow-color);
+	--shadow-sm: 0 0 2px var(--shadow-color);
+
+	--accent-color: #9ed3ef;
+	--accent-light: #e7f4fb;
+	--accent-dark: #286789;
+	--accent-hover: #82c6eb;
+	--accent-active: #65b5e0;
+	--accent-focus: #357fa8;
+	--focus-ring: 0 0 0 3px rgb(53 127 168 / 30%);
+}
+
+* {
+	color: var(--foreground);
+	background-color: var(--background);
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+*::-webkit-scrollbar {
+	display: none;
+}
+
+body {
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+}
+
+div {
+	width: 100%;
+	user-select: none;
+}
+
+button, input[type="button"] {
+	border-radius: 4px;
+	text-align: center;
+	padding: 0 12px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 700;
+	display: inline;
+	--heading-size: 24px;
+	height: var(--heading-size);
+	line-height: var(--heading-size);
+	font-size: var(--heading-size);
+}
+
+h1 {--heading-size: 24px;}
+
+h2 {--heading-size: 22px;padding-left: 4px;}
+
+h3 {--heading-size: 20px;padding-left: 8px;}
+
+h4 {--heading-size: 18px;padding-left: 10px;}
+
+h5 {--heading-size: 16px;padding-left: 12px;}
+
+h6 {--heading-size: 14px;padding-left: 14px;}
+
+hr {color: var(--border-strong);}
+
+button, input[type="button"] {
+	--button-height-px: 32px;
+	display: inline-block;
+	outline: none;
+	border: none;
+	background-color: var(--button-color);
+	color: var(--button-text);
+	cursor: pointer;
+	height: calc(var(--button-height-px) + 10px);
+	line-height: calc(var(--button-height-px) + 10px);
+}
+
+button:hover, input[type="button"]:hover {
+	background-color: var(--button-hover);
+}

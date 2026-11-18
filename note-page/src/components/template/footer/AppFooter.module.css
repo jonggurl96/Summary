@@ -1,0 +1,7 @@
+.AppFooter {
+	--footer-height-px: var(--app-footer-height-px);
+	width: 100vw;
+	height: var(--footer-height-px);
+	background-color: var(--surface-muted);
+	border-top: 1px solid var(--accent-color);
+}

@@ -1,0 +1,19 @@
+:root {
+	--app-header-height-px: 60px;
+	--app-footer-height-px: 120px;
+	--app-left-side-width-px: 350px;
+}
+
+.below-header {
+	--header-height-px: var(--app-header-height-px);
+	height: calc(100% - var(--header-height-px));
+	overflow-y: auto;
+	background-color: var(--background);
+	padding: 0;
+}
+
+.app-content {
+	min-height: calc(100% - var(--app-footer-height-px));
+	display: grid;
+	grid-template-columns: var(--app-left-side-width-px) minmax(0, 1fr);
+}
