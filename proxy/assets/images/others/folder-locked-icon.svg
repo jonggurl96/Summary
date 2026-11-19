@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" fill="none">
+	<title>Locked folder</title>
+	<g stroke="#18181B" stroke-width="5" stroke-linejoin="round">
+		<path d="M25 33 47 29Q51 28 54 31L63 39 96 34Q101 33 105 37L110 42 102 92 32 108 22 101Q19 99 19 94V40Q19 34 25 33Z" fill="#D4D4D8"/>
+		<path d="M30 41 52 37 64 46 105 40Q112 39 112 46V90Q112 96 106 97L36 109Q29 110 29 103V46Q29 43 30 41Z" fill="#C4B5FD"/>
+	</g>
+	<path d="M80 53 105 49V91L64 98Z" fill="#A78BFA"/>
+	<path d="M80 53 105 91 64 98Z" fill="#8B5CF6"/>
+	<path d="M43 58 59 55" stroke="#18181B" stroke-width="4" stroke-linecap="round"/>
+	<g stroke-linejoin="round" stroke-linecap="round">
+		<path d="M18 101V94a9 9 0 0 1 18 0v7" stroke="#F4F4F5" stroke-width="7"/>
+		<rect x="12" y="98" width="30" height="22" rx="5" stroke="#F4F4F5" stroke-width="2"/>
+		<path d="M18 101V94a9 9 0 0 1 18 0v7" stroke="#18181B" stroke-width="5"/>
+		<rect x="12" y="98" width="30" height="22" rx="5" fill="#18181B"/>
+		<path d="M27 107v5" stroke="#F4F4F5" stroke-width="4"/>
+	</g>
+</svg>
