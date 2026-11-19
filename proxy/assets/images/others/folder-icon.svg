@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" fill="none">
+  <title>Folder</title>
+  <g stroke="#18181B" stroke-width="5" stroke-linejoin="round">
+    <path d="M23 34 51 30 64 40 99 35 110 45 98 96 32 108 19 96 19 40Q19 35 23 34Z" fill="#D4D4D8"/>
+    <path d="M23 34 51 30 64 40 99 35 110 45 42 56Z" fill="#F4F4F5"/>
+    <path d="M39 53 105 43Q113 42 112 50L101 92Q100 98 94 99L34 109Q27 110 28 103L33 61Q34 55 39 53Z" fill="#C4B5FD"/>
+  </g>
+  <path d="M79 56 102 51 94 91 64 96Z" fill="#A78BFA"/>
+  <path d="M79 56 94 91 64 96Z" fill="#8B5CF6"/>
+  <path d="M45 64 61 61" stroke="#18181B" stroke-width="4" stroke-linecap="round"/>
+</svg>

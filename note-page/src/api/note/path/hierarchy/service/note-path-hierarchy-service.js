@@ -25,11 +25,18 @@ export async function getNoteTree(params) {
 	const { userId } = params;
 
 	const { root, folders } = await getTestFolder(userId);
+	const rootFolder = folders.find(folder => folder.folderId === root);
 
 	const notes = await getTestNote(userId);
 
 	/** @type {NotePathHierarchy} */
-	const tree = folders.find(folder => folder.folderId === root);
+	const tree = {
+		id      : rootFolder.folderId,
+		parent  : rootFolder.parentFolder,
+		name    : rootFolder.folderNm,
+		isFolder: true,
+		isNotice: false,
+	};
 
 	function addLeaves(t) {
 		if(t.isFolder) {

@@ -14,6 +14,10 @@
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 10px;
 }
 
 .AppLeftSideHeader {
@@ -23,6 +27,19 @@
 	background-color: transparent;
 }
 
+.AppLeftSideHeader > h1 {
+	padding-left: 5px;
+}
+
 .AppLeftSideCloseButton {
 	--button-height-px: 12px;
+	background: var(--button-color) url('http://192.168.123.167:80/images/api/v1/arrows/first_arrow.svg') 50% 50% / 15px no-repeat;
+	width: 50px;
+}
+
+.AppLeftSideBody {
+	background-color: var(--surface-muted);
+	height: stretch;
+	padding: 10px;
+	border-radius: 5px;
 }

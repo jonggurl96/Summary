@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" fill="none">
+  <title>Note</title>
+  <g stroke="#18181B" stroke-width="5" stroke-linejoin="round">
+    <path d="M28 28 73 19 91 34 91 100 39 111 28 102Z" fill="#D4D4D8"/>
+    <path d="M39 34 79 26 101 44 101 99 39 111Z" fill="#C4B5FD"/>
+  </g>
+  <path d="M96 51 96 95 56 104Z" fill="#A78BFA"/>
+  <path d="M96 72 96 95 76 100Z" fill="#8B5CF6"/>
+  <path d="M79 26V49L101 44Z" fill="#F4F4F5" stroke="#18181B" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M50 50 65 47M50 67 87 60M50 83 87 76" stroke="#18181B" stroke-width="4" stroke-linecap="round"/>
+</svg>

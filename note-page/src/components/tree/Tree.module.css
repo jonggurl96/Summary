@@ -1,0 +1,59 @@
+* {
+	--node-item-height-px: 25px;
+}
+
+.Tree {
+	background-color: var(--surface);
+	border-radius: 5px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 5px;
+}
+
+.Node {
+	background-color: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	height: var(--node-item-height-px);
+	line-height: var(--node-item-height-px);
+	border-radius: 5px;
+}
+
+.NodeName {
+	background-color: transparent;
+	padding-left: 5px;
+	cursor: pointer;
+}
+
+.NodeName:hover {
+	text-decoration: underline;
+}
+
+.NodeItem {
+	--depth: 0;
+	display: inline-flex;
+	align-items: center;
+	width: calc(80% - var(--depth) * var(--node-item-height-px) / 2);
+	height: var(--node-item-height-px);
+	background-color: transparent;
+	/*border-left: 1px solid var(--foreground-muted);*/
+}
+
+.NodeIndent {
+	width: 1px;
+	height: 70%;
+	background-color: var(--foreground-muted);
+}
+
+img.NodeItemIcon {
+	display: inline-block;
+	width: var(--node-item-height-px);
+	height: var(--node-item-height-px);
+	padding: 0;
+	margin: 0;
+	background-color: transparent;
+	cursor: pointer;
+}
