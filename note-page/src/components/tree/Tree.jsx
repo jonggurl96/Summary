@@ -1,5 +1,6 @@
+import { imgSrc }          from "api/asset/route/img";
+import { motion }          from "framer-motion";
 import React, { useState } from 'react';
-import { imgSrc }          from "../../api/asset/route/img";
 import styles              from './Tree.module.css';
 
 const NOTE_IMG_SRC = imgSrc("/others/note-icon.svg");
@@ -33,12 +34,14 @@ export function TreeNode(prop) {
 				<img src={folded ? FOLDER_CLOSED_IMG_SRC : FOLDER_IMG_SRC} alt="폴더" className={styles.NodeItemIcon} />
 				<span className={styles.NodeName} onClick={() => toggleFolder(depth, !folded)}>{data.name}</span>
 			</Item>
-			{!folded && (
-				data.children.map(child => child.isFolder
-					? (<TreeNode key={child.id} data={child} depth={depth + 1} />)
-					: (<LeafNode key={child.id} data={child} depth={depth + 1} />)
-				)
-			)}
+			<motion.div className={styles.NodeChildren} initial={{ height: folded ? 'auto' : 0 }} animate={{ height: folded ? 0 : 'auto' }} transition={{ duration: 0.2 }}>
+				{!folded && (
+					data.children.map(child => child.isFolder
+						? (<TreeNode key={child.id} data={child} depth={depth + 1} />)
+						: (<LeafNode key={child.id} data={child} depth={depth + 1} />)
+					)
+				)}
+			</motion.div>
 		</div>
 	);
 }
