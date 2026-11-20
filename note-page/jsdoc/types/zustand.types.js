@@ -10,9 +10,9 @@
  * @template T
  * @template U
  * @typedef {Object} StoreApiData<T, U>
- * @property {ZustandApiStatus} status 상태메세지
+ * @property {ZustandApiStatus} status 상태메시지
  * @property {T|undefined} data
- * @property {string|null} error 에러메세지
+ * @property {string|null} error 에러메시지
  * @property {function(U)} fetchData 실제 fetch() 함수를 실행 및 파싱하여 data에 저장하는 함수
  */
 

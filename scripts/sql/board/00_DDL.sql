@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS notes
 	folder VARCHAR(20),
 	title VARCHAR(100) NOT NULL,
 	hashtags JSON NOT NULL DEFAULT '[]',
-	is_notice BOOLEAN NOT NULL DEFAULT FALSE,
 	created_by VARCHAR(20) NOT NULL DEFAULT 'SYSTEM',
 	created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_by VARCHAR(20) NOT NULL DEFAULT 'SYSTEM',
@@ -55,7 +54,6 @@ COMMENT ON COLUMN notes.note_id IS '사용자 노트 식별자';
 COMMENT ON COLUMN notes.folder IS '노트 위치 폴더';
 COMMENT ON COLUMN notes.title IS '노트 제목';
 COMMENT ON COLUMN notes.hashtags IS '해시태그';
-COMMENT ON COLUMN notes.is_notice IS '공지사항 여부';
 
 -- 사용자 노트 블럭 타입 테이블
 CREATE TABLE IF NOT EXISTS note_block_types
@@ -143,11 +141,13 @@ COMMENT ON COLUMN note_block_attrs.bg_color IS '블럭 배경 색상';
 COMMENT ON COLUMN note_block_attrs.link IS '링크';
 
 -- 노트 편집모드
+-- RW, R, W
 CREATE TABLE IF NOT EXISTS note_modes
 (
 	code SMALLINT
 		PRIMARY KEY,
 	code_nm VARCHAR(15) NOT NULL,
+	code_description TEXT,
 	created_by VARCHAR(20) NOT NULL DEFAULT 'SYSTEM',
 	created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_by VARCHAR(20) NOT NULL DEFAULT 'SYSTEM',
@@ -155,5 +155,22 @@ CREATE TABLE IF NOT EXISTS note_modes
 );
 
 ALTER TABLE note_modes
+	OWNER TO portfolio;
+
+-- 노트 접근모드
+-- 모두 가능, 조회만 가능, 수정 및 삭제 가능
+CREATE TABLE IF NOT EXISTS note_access
+(
+	code SMALLINT
+		PRIMARY KEY,
+	code_nm VARCHAR(15) NOT NULL,
+	code_description TEXT,
+	created_by VARCHAR(20) NOT NULL DEFAULT 'SYSTEM',
+	created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_by VARCHAR(20) NOT NULL DEFAULT 'SYSTEM',
+	updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE note_access
 	OWNER TO portfolio;
 

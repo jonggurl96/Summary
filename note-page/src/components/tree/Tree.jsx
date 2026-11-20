@@ -5,13 +5,17 @@ import styles              from './Tree.module.css';
 
 const NOTE_IMG_SRC = imgSrc("/others/note-icon.svg");
 
+const NOTE_LOCKED_IMG_SRC = imgSrc("/others/note-locked-icon.svg");
+
 const FOLDER_IMG_SRC = imgSrc("/others/folder-icon.svg");
 
 const FOLDER_CLOSED_IMG_SRC = imgSrc("/others/folder-closed-icon.svg");
 
+const FOLDER_LOCKED_IMG_SRC = imgSrc("/others/folder-locked-icon.svg");
+
 export function TreeNode(prop) {
 	const {
-		/** @type {{ id: string, name: string, children: [] }} */
+		/** @type {{ id: string, name: string, isLocked: boolean, children: [] }} */
 		data,
 		/** @type {number} */
 		depth = 0
@@ -31,7 +35,7 @@ export function TreeNode(prop) {
 	return (
 		<div className={styles.Tree}>
 			<Item depth={depth}>
-				<img src={folded ? FOLDER_CLOSED_IMG_SRC : FOLDER_IMG_SRC} alt="폴더" className={styles.NodeItemIcon} />
+				<img src={folded ? (data.isLocked ? FOLDER_LOCKED_IMG_SRC : FOLDER_CLOSED_IMG_SRC) : FOLDER_IMG_SRC} alt="폴더" className={styles.NodeItemIcon} />
 				<span className={styles.NodeName} onClick={() => toggleFolder(depth, !folded)}>{data.name}</span>
 			</Item>
 			<motion.div className={styles.NodeChildren} initial={{ height: folded ? 'auto' : 0 }} animate={{ height: folded ? 0 : 'auto' }} transition={{ duration: 0.2 }}>
@@ -49,7 +53,7 @@ export function TreeNode(prop) {
 function LeafNode({ data, depth }) {
 	return (
 		<Item depth={depth}>
-			<img src={NOTE_IMG_SRC} alt="노트" className={styles.NodeItemIcon} />
+			<img src={data.isLocked ? NOTE_LOCKED_IMG_SRC : NOTE_IMG_SRC} alt="노트" className={styles.NodeItemIcon} />
 			<span className={styles.NodeName}>{data.name}</span>
 		</Item>
 	);

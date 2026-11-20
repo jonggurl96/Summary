@@ -10,7 +10,7 @@
  * @property {string} parent
  * @property {string} name
  * @property {boolean} isFolder
- * @property {boolean} [isNotice = false]
+ * @property {boolean} [isLocked = false]
  */
 import { getTestFolder } from "./repository/folder-repository.js";
 import { getTestNote }   from "./repository/note-repository.js";
@@ -35,7 +35,7 @@ export async function getNoteTree(params) {
 		parent  : rootFolder.parentFolder,
 		name    : rootFolder.folderNm,
 		isFolder: true,
-		isNotice: false,
+		isLocked: false,
 	};
 
 	function addLeaves(t) {
@@ -45,7 +45,7 @@ export async function getNoteTree(params) {
 				parent  : folder.parentFolder,
 				name    : folder.folderNm,
 				isFolder: true,
-				isNotice: false,
+				isLocked: false,
 			}));
 			t.children.forEach(addLeaves);
 			t.children.push(...notes.filter(note => note.folder === t.id).map(note => ({
@@ -53,7 +53,7 @@ export async function getNoteTree(params) {
 				parent  : note.folder,
 				name    : note.title,
 				isFolder: false,
-				isNotice: note.isNotice,
+				isLocked: note.isLocked,
 			})));
 		}
 	}

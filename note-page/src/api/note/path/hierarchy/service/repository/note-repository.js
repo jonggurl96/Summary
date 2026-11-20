@@ -4,7 +4,7 @@
  * @property {string} folder
  * @property {string} title
  * @property {string} [hashtags = '[]']
- * @property {boolean} [isNotice = false]
+ * @property {boolean} [isLocked = false]
  * @property {string} [createdBy = 'SYSTEM']
  * @property {Date} [createdAt = new Date('2026-11-17 17:58:39')]
  * @property {string} [updatedBy = 'SYSTEM']
@@ -22,7 +22,7 @@ export async function getTestNote(_userId) {
 		folder   : 'ROOT',
 		title    : '공지사항 테스트',
 		hashtags : '["공지사항", "테스트"]',
-		isNotice : true,
+		isLocked : true,
 		createdBy: 'SYSTEM',
 		createdAt: new Date('2026-11-17 17:58:39'),
 		updatedBy: 'SYSTEM',
