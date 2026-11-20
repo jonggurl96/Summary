@@ -24,9 +24,7 @@
 	cursor: pointer;
 }
 
-.NodeName:hover {
-	text-decoration: underline;
-}
+.NodeItemIcon:hover ~ .NodeName, .NodeName:hover {text-decoration: underline;}
 
 .NodeItem {
 	--depth: 0;
