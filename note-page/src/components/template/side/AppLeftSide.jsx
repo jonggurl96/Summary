@@ -1,6 +1,7 @@
 import { Tree }                       from "components/tree/Tree";
 import React, { useEffect, useState } from 'react';
 import { useDirectoryStore }          from "stores/note/path/useDirectoryStore";
+import { ErrorIconMessage }           from "../../message/with-icon";
 import styles                         from './AppLeftSide.module.css';
 
 export default function AppLeftSide() {
@@ -33,7 +34,7 @@ export default function AppLeftSide() {
 				<div className={styles.AppLeftSideBody}>
 					{['idle', 'pending'].includes(loadStatus) && "로딩중"}
 					{noteHierarchy && (<Tree data={noteHierarchy} minimize={!leftVisible} />)}
-					{loadError && <p>에러발생</p>}
+					{loadError && <ErrorIconMessage message={loadError} />}
 				</div>
 			</div>
 

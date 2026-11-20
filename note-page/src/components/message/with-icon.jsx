@@ -44,3 +44,7 @@ export function NotUpdateableMessage({ goBackLink, src }) {
 export function NotDeletableMessage({ goBackLink, src }) {
 	return <NotAuthorizedMessage goBackLink={goBackLink} src={src} message="삭제 권한이 없습니다." />;
 }
+
+export function ErrorIconMessage({ src = "/danger/danger_i_big.svg", message = "에러가 발생하였습니다.", children }) {
+	return <MessageWithIcon src={src} message={message}>{children}</MessageWithIcon>;
+}
