@@ -5,6 +5,5 @@
 	flex-shrink: 0;
 	flex-basis: var(--app-side-width-px);
 	height: stretch;
-	border-radius: 5px;
 	padding: 10px;
 }

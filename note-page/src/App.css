@@ -14,7 +14,8 @@
 
 .app-main {
 	padding: 10px 10px 10px 0;
-	height: calc(100% - var(--app-footer-height-px));
+	overflow-y: auto;
+	min-height: calc(100% - var(--app-footer-height-px));
 	display: flex;
 	gap: 10px;
 }
@@ -43,7 +44,51 @@
 	background-color: var(--surface-muted);
 	height: stretch;
 	padding: 10px;
-	border-radius: 5px;
 }
 
-.app-content {}
+.app-content {
+	flex: 1;
+	height: stretch;
+	border: 1px solid var(--border-color);
+	background-color: var(--surface);
+	padding: 10px;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.app-content-body {
+	width: 90%;
+	max-width: 50vw;
+}
+
+.app-content-header {
+	margin-top: 20px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	border-bottom: 1px solid var(--border-strong);
+	border-radius: 0;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+}
+
+.app-content-header > h1 {
+	--heading-size: 36px;
+}
+
+.app-content-header > span {
+}
+
+.note-content-area {
+	height: stretch;
+	background-color: var(--surface-muted);
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	padding: 5px;
+}
+
+.note-content-area > div {
+	background-color: var(--surface);
+}

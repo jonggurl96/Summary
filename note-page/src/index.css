@@ -76,6 +76,7 @@ body {
 div {
 	width: 100%;
 	user-select: none;
+	border-radius: 5px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -122,4 +123,8 @@ input[type="button"], input[type="button"] > img {
 button:hover, button:hover > img,
 input[type="button"]:hover, input[type="button"]:hover > img {
 	background-color: var(--button-hover);
+}
+
+span {
+	background-color: transparent;
 }

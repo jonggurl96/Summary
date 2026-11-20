@@ -2,7 +2,6 @@ import './App.css';
 import { imgSrc }            from "api/asset/route/img";
 import { ErrorIconMessage }  from "components/message/with-icon";
 import AppContainer          from "components/template/container/AppContainer";
-import AppContent            from "components/template/content/AppContent";
 import AppFooter             from "components/template/footer/AppFooter";
 import AppHeader             from "components/template/header/AppHeader";
 import AppLeftSide           from "components/template/side/AppLeftSide";
@@ -14,6 +13,8 @@ import { useDirectoryStore } from "./stores/note/path/useDirectoryStore";
 const SLIDE_LEFT_BUTTON_IMG_SRC = imgSrc("/arrows/first_arrow.svg");
 
 const SLIDE_RIGHT_BUTTON_IMG_SRC = imgSrc("/arrows/end_arrow.svg");
+
+const samplepath = "/sample/path";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
 			<div className="below-header">
 				<main className="app-main">
 
+					{/* 왼쪽 폴더 메뉴 영역 */}
 					<AppLeftSide leftVisible={leftVisible}>
 						<div className="app-left-slide-header" style={{ justifyContent: leftVisible ? 'space-between' : 'center' }}>
 							{leftVisible && <h1>파일찾기</h1>}
@@ -46,8 +48,25 @@ function App() {
 						</div>
 					</AppLeftSide>
 
-					<AppContent />
+					{/* 가운데 노트 영역 */}
+					<article className="app-content">
+						<div className="app-content-body">
 
+							{/* 노트 제목 영역 */}
+							<div className="app-content-header">
+								<h1>노트 제목</h1>
+								{samplepath && <span>{samplepath}</span>}
+							</div>
+
+							{/* 노트 내용 영역 */}
+							<div className="note-content-area">
+								{Array.from({ length: 100 }).map((_, index) => <div key={index}>내용 {index}</div>)}
+							</div>
+
+						</div>
+					</article>
+
+					{/* 오른쪽 메타데이터 영역 */}
 					<AppRightSide />
 
 				</main>

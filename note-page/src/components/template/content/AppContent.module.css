@@ -1,8 +1,0 @@
-.AppContent {
-	flex: 1;
-	height: stretch;
-	border: 1px solid var(--border-color);
-	background-color: var(--surface);
-	padding: 10px;
-	border-radius: 5px;
-}
