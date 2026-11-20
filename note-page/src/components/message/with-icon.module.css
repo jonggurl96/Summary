@@ -1,0 +1,32 @@
+div {
+	background-color: transparent;
+}
+
+.IconMsgFrame {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.IconArea {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.IconStyle {
+	width: 30%;
+}
+
+.TextArea {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.TextStyle {
+	text-align: center;
+	font-weight: 500;
+	font-size: 4em;
+}
