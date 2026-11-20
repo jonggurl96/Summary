@@ -3,6 +3,5 @@
 .idea/
 build/
 node_modules/
-proxy/conf/dev/nginx/
-!/proxy/conf/dev/nginx/html/
-!proxy/conf/dev/nginx/conf/nginx.conf
+proxy/conf/dev/logs
+proxy/conf/dev/temp
