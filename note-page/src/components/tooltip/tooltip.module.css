@@ -1,0 +1,8 @@
+.TooltipContainer {
+	width: fit-content;
+	height: fit-content;
+	background-color: transparent;
+	border: none;
+	z-index: var(--tooltip-z, 1000);
+	position: fixed;
+}

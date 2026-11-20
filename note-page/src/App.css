@@ -1,7 +1,7 @@
 :root {
 	--app-header-height-px: 60px;
 	--app-footer-height-px: 120px;
-	--app-left-side-width-px: 350px;
+	--app-side-width-px: 400px;
 }
 
 .below-header {
@@ -10,6 +10,13 @@
 	overflow-y: auto;
 	background-color: var(--background);
 	padding: 0;
+}
+
+.app-main {
+	padding: 10px 10px 10px 0;
+	height: calc(100% - var(--app-footer-height-px));
+	display: flex;
+	gap: 10px;
 }
 
 .app-content {

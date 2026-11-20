@@ -1,0 +1,10 @@
+.test {
+	cursor: pointer;
+	border: 1px solid black;
+	background-color: white;
+}
+
+.test:hover {
+	background-color: var(--accent-light);
+}
+

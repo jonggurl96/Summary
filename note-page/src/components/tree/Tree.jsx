@@ -1,7 +1,10 @@
-import { imgSrc }          from "api/asset/route/img";
-import { motion }          from "framer-motion";
-import React, { useState } from 'react';
-import styles              from './Tree.module.css';
+import { imgSrc }                   from "api/asset/route/img";
+import clsx                         from "clsx";
+import { motion }                   from "framer-motion";
+import React, { useRef, useState }  from 'react';
+import { WarningNone }              from "../message/with-icon";
+import { Tooltip, tooltipDuration } from "../tooltip/tooltip";
+import styles                       from './Tree.module.css';
 
 const NOTE_IMG_SRC = imgSrc("/others/note-icon.svg");
 
@@ -13,15 +16,27 @@ const FOLDER_CLOSED_IMG_SRC = imgSrc("/others/folder-closed-icon.svg");
 
 const FOLDER_LOCKED_IMG_SRC = imgSrc("/others/folder-locked-icon.svg");
 
-export function TreeNode(prop) {
+export function Tree(prop) {
 	const {
 		/** @type {{ id: string, name: string, isLocked: boolean, children: [] }} */
 		data,
 		/** @type {number} */
-		depth = 0
+		depth = 0,
+		/** @type {boolean} */
+		minimize
 	} = prop;
 
-	/** @type {useState<boolean>} */
+	if(data == null)
+		return <WarningNone message="폴더 및 노트가 존재하지 않습니다." />;
+
+	return (
+		<div className={styles.Tree}>
+			<Folder data={data} depth={depth} minimize={minimize} path={data.name} />
+		</div>
+	);
+}
+
+function Folder({ data, depth, minimize, path }) {
 	const [folded, setFolded] = useState(depth !== 0);
 
 	const toggleFolder = (depth, f) => {
@@ -29,42 +44,81 @@ export function TreeNode(prop) {
 		else setFolded(f);
 	};
 
-	if(data == null)
-		return null;
+	const folderIcon = folded ? (data.isLocked ? FOLDER_LOCKED_IMG_SRC : FOLDER_CLOSED_IMG_SRC) : FOLDER_IMG_SRC;
 
 	return (
-		<div className={styles.Tree}>
-			<Item depth={depth}>
-				<img src={folded ? (data.isLocked ? FOLDER_LOCKED_IMG_SRC : FOLDER_CLOSED_IMG_SRC) : FOLDER_IMG_SRC} alt="폴더" className={styles.NodeItemIcon} />
-				<span className={styles.NodeName} onClick={() => toggleFolder(depth, !folded)}>{data.name}</span>
-			</Item>
+		<>
+			<Item alt="폴더" depth={depth} iconSrc={folderIcon} minimize={minimize} name={data.name} path={path} onClick={() => toggleFolder(depth, !folded)} />
 			<motion.div className={styles.NodeChildren} initial={{ height: folded ? 'auto' : 0 }} animate={{ height: folded ? 0 : 'auto' }} transition={{ duration: 0.2 }}>
 				{!folded && (
 					data.children.map(child => child.isFolder
-						? (<TreeNode key={child.id} data={child} depth={depth + 1} />)
-						: (<LeafNode key={child.id} data={child} depth={depth + 1} />)
+						? (<Folder key={child.id} data={child} depth={depth + 1} minimize={minimize} path={`${path}/${child.name}`} />)
+						: (<Note key={child.id} data={child} depth={depth + 1} minimize={minimize} path={`${path}/${child.name}`} />)
 					)
 				)}
 			</motion.div>
-		</div>
+		</>
 	);
 }
 
-function LeafNode({ data, depth }) {
+function Note({ data, depth, minimize, path }) {
+
+	const openNote = () => {
+		console.log('open note', data);
+	};
+
+	const noteIcon = data.isLocked ? NOTE_LOCKED_IMG_SRC : NOTE_IMG_SRC;
+
 	return (
-		<Item depth={depth}>
-			<img src={data.isLocked ? NOTE_LOCKED_IMG_SRC : NOTE_IMG_SRC} alt="노트" className={styles.NodeItemIcon} />
-			<span className={styles.NodeName}>{data.name}</span>
-		</Item>
+		<Item alt="노트" depth={depth} iconSrc={noteIcon} minimize={minimize} name={data.name} path={path} onClick={openNote} />
 	);
 }
 
-function Item({ depth, children }) {
+function Item({ alt, depth, iconSrc, minimize, name, path, onClick }) {
+
+	const itemRef = useRef(null);
+
+	const [tooltipInfo, setTooltipInfo] = useState({
+		open  : false,
+		top   : 0,
+		left  : 0,
+		height: 0
+	});
+
+	const closeTooltip = () => {
+		setTooltipInfo({ ...tooltipInfo, open: false });
+	};
+
+	const openTooltip = () => {
+		if(!minimize) return;
+		const rect = itemRef.current.getBoundingClientRect();
+		setTooltipInfo({ open: true, top: rect.top, left: rect.right + 10, height: rect.height });
+	};
+
 	return (
-		<div className={styles.Node}>
-			{depth > 0 && <div className={styles.NodeIndent}></div>}
-			<div className={styles.NodeItem} style={{ '--depth': depth }}>{children}</div>
-			<div style={{ width: '20%' }}>buttons</div>
-		</div>
+		<React.Fragment>
+			<div ref={itemRef} className={styles.Node} style={{ justifyContent: minimize ? 'center' : 'flex-end' }}
+			     onMouseOver={openTooltip} onMouseLeave={closeTooltip}>
+
+				{(depth > 0 && !minimize) && <div className={styles.NodeIndent}></div>}
+				<div className={clsx(styles.NodeItem, minimize && styles.MinimizeNodeItem)} style={{ '--depth': depth }}>
+					<img src={iconSrc} alt={alt} className={styles.NodeItemIcon} onClick={onClick} />
+					{!minimize && <span className={styles.NodeName} onClick={onClick}>{name}</span>}
+				</div>
+				{!minimize && (<div style={{ width: '20%' }}>buttons</div>)}
+
+				{tooltipInfo.open && (
+					<Tooltip top={tooltipInfo.top} left={tooltipInfo.left}>
+						<motion.div className={styles.NodeTooltip}
+						            initial={{ width: 0, height: tooltipInfo.height }}
+						            animate={{ width: 'auto' }}
+						            transition={{ duration: tooltipDuration }}>
+							<span>{path.replace(/\/\//g, "/")}</span>
+						</motion.div>
+					</Tooltip>
+				)}
+
+			</div>
+		</React.Fragment>
 	);
 }

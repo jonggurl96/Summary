@@ -48,6 +48,8 @@ code {
 	--accent-active: #65b5e0;
 	--accent-focus: #357fa8;
 	--focus-ring: 0 0 0 3px rgb(53 127 168 / 30%);
+
+	--tooltip-z: 1000;
 }
 
 * {

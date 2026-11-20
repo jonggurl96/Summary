@@ -16,7 +16,6 @@
 	background-color: transparent;
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
 	height: var(--node-item-height-px);
 	line-height: var(--node-item-height-px);
 	border-radius: 5px;
@@ -39,7 +38,26 @@
 	width: calc(80% - var(--depth) * var(--node-item-height-px) / 2);
 	height: var(--node-item-height-px);
 	background-color: transparent;
-	/*border-left: 1px solid var(--foreground-muted);*/
+}
+
+.MinimizeNodeItem {
+	width: 100% !important;
+}
+
+.NodeTooltip {
+	background-color: var(--surface);
+	border-radius: 5px;
+	border: 1px solid var(--foreground-muted);
+	z-index: var(--tooltip-z);
+	overflow-x: hidden;
+	white-space: nowrap;
+	padding: 0 5px;
+}
+
+.NodeTooltipContent {
+	display: inline-block;
+	height: 100%;
+	line-height: 100%;
 }
 
 .NodeIndent {

@@ -3,5 +3,5 @@
 	padding: 15px;
 	background-color: var(--surface);
 	height: var(--app-header-height-px);
-	border-bottom: 1px solid var(--accent-color);
+	border-bottom: 1px solid var(--border-color);
 }
