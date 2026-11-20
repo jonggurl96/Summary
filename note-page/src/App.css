@@ -19,8 +19,31 @@
 	gap: 10px;
 }
 
-.app-content {
-	min-height: calc(100% - var(--app-footer-height-px));
-	display: grid;
-	grid-template-columns: var(--app-left-side-width-px) minmax(0, 1fr);
+.app-left-slide-header {
+	display: flex;
+	align-items: center;
+	background-color: transparent;
 }
+
+.app-left-slide-header > h1 {
+	padding-left: 5px;
+}
+
+.app-left-slide-close-button {
+	--button-height-px: 12px;
+	width: 50px;
+	padding: 0;
+}
+
+.app-left-slide-close-button > img {
+	height: 100%;
+}
+
+.app-left-slide-body {
+	background-color: var(--surface-muted);
+	height: stretch;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.app-content {}
