@@ -8,6 +8,7 @@ import AppLeftSide           from "components/template/side/AppLeftSide";
 import AppRightSide          from "components/template/side/AppRightSide";
 import { Tree }              from "components/tree/Tree";
 import { useState }          from 'react';
+import Accordion             from "./components/accordion/Accordion";
 import { useDirectoryStore } from "./stores/note/path/useDirectoryStore";
 
 const SLIDE_LEFT_BUTTON_IMG_SRC = imgSrc("/arrows/first_arrow.svg");
@@ -67,7 +68,9 @@ function App() {
 					</article>
 
 					{/* 오른쪽 메타데이터 영역 */}
-					<AppRightSide />
+					<AppRightSide>
+						<Accordion title="메타데이터"></Accordion>
+					</AppRightSide>
 
 				</main>
 				<AppFooter>footer</AppFooter>

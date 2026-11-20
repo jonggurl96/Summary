@@ -1,8 +1,8 @@
 import React  from 'react';
 import styles from './AppRightSide.module.css';
 
-export default function AppRightSide() {
+export default function AppRightSide({ children }) {
 	return (
-		<div className={styles.AppRightSide}></div>
+		<div className={styles.AppRightSide}>{children}</div>
 	);
 }

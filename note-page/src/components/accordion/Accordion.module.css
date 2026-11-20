@@ -1,0 +1,20 @@
+.Accordion {
+	border-radius: 0;
+	padding: 0 10px 10px;
+	margin-top: 20px;
+	height: 200px;
+}
+
+.AccordionHeader {
+	border-bottom: 1px solid var(--border-strong);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 10px;
+	border-radius: 0;
+	cursor: pointer;
+}
+
+.AccordionArrow {
+	height: 100%;
+}
