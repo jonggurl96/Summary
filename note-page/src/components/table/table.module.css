@@ -1,0 +1,61 @@
+.Tr, .Td {background-color: transparent;}
+
+.Th, .Td {
+	flex-grow: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: var(--td-font-size);
+	border-radius: 0;
+	display: inline-flex;
+	align-items: center;
+	padding: 5px;
+}
+
+.Td {
+	--td-font-size: var(--default-font-size);
+	text-align: center;
+	border-collapse: collapse;
+	border-bottom: 1px dotted var(--accent-light);
+}
+
+.Th {
+	--td-font-size: calc(var(--default-font-size) + 2px);
+	font-weight: 500;
+	text-align: left;
+}
+
+.Th * {
+	margin-left: 5px;
+}
+
+.Tr {
+	display: flex;
+	border-radius: 0;
+}
+
+.Table {
+	border: 1px solid var(--accent-light);
+	background-color: var(--surface);
+	position: relative;
+	padding: 5px;
+}
+
+.TableCaption {
+	display: flex;
+	justify-content: flex-end;
+	background-color: transparent;
+	position: relative;
+	top: 0;
+	height: 0;
+	overflow: visible;
+}
+
+.TableCaption span {
+	position: absolute;
+	top: -2px;
+	right: 0;
+	font-size: 8px;
+	color: red;
+	padding-right: 2px;
+}

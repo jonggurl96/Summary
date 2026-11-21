@@ -8,8 +8,9 @@ import AppLeftSide           from "components/template/side/AppLeftSide";
 import AppRightSide          from "components/template/side/AppRightSide";
 import { Tree }              from "components/tree/Tree";
 import { useState }          from 'react';
-import Accordion             from "./components/accordion/Accordion";
-import { useDirectoryStore } from "./stores/note/path/useDirectoryStore";
+import Accordion                                   from "./components/accordion/Accordion";
+import { CaptionTable, TableTd, TableTh, TableTr } from "./components/table/table";
+import { useDirectoryStore }                       from "./stores/note/path/useDirectoryStore";
 
 const SLIDE_LEFT_BUTTON_IMG_SRC = imgSrc("/arrows/first_arrow.svg");
 
@@ -17,7 +18,7 @@ const SLIDE_RIGHT_BUTTON_IMG_SRC = imgSrc("/arrows/end_arrow.svg");
 
 const samplepath = "/sample/path";
 
-function App() {
+export default function App() {
 
 	const loadStatus = useDirectoryStore(state => state.status);
 	const noteHierarchy = useDirectoryStore(state => state.data);
@@ -69,7 +70,29 @@ function App() {
 
 					{/* 오른쪽 메타데이터 영역 */}
 					<AppRightSide>
-						<Accordion title="메타데이터"></Accordion>
+						<Accordion title="메타데이터">
+							<CaptionTable>
+								<TableTr>
+									<TableTh text="작성자"></TableTh>
+									<TableTd text="SYSTEM"></TableTd>
+									<TableTh text="작성일시"></TableTh>
+									<TableTd autoNewline={true} text="0000.01.01 00:00:00"></TableTd>
+								</TableTr>
+								<TableTr>
+									<TableTh text="수정자"></TableTh>
+									<TableTd text="SYSTEM"></TableTd>
+									<TableTh text="수정일시"></TableTh>
+									<TableTd autoNewline={true} text="2026.11.21 22:46:18"></TableTd>
+								</TableTr>
+								<TableTr>
+									<TableTh text="조회권한"></TableTh>
+									<TableTd text="읽기만ㅋ"></TableTd>
+									<TableTh text="조회수"></TableTh>
+									<TableTd text="64"></TableTd>
+								</TableTr>
+							</CaptionTable>
+						</Accordion>
+						<Accordion title="목차"></Accordion>
 					</AppRightSide>
 
 				</main>
@@ -78,5 +101,3 @@ function App() {
 		</AppContainer>
 	);
 }
-
-export default App;

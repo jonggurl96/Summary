@@ -7,3 +7,10 @@
 	height: stretch;
 	padding: 10px;
 }
+
+.AppRightSideBody {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	background-color: transparent;
+}

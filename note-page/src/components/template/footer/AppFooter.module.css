@@ -2,6 +2,6 @@
 	--footer-height-px: var(--app-footer-height-px);
 	width: 100vw;
 	height: var(--footer-height-px);
-	background-color: var(--surface-muted);
+	background-color: var(--accent-light);
 	border-top: 1px solid var(--border-color);
 }

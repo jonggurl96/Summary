@@ -41,7 +41,7 @@
 }
 
 .app-left-slide-body {
-	background-color: var(--surface-muted);
+	background-color: var(--accent-light);
 	height: stretch;
 	padding: 10px;
 }
@@ -61,11 +61,13 @@
 .app-content-body {
 	width: 90%;
 	max-width: 50vw;
+	background-color: transparent;
 }
 
 .app-content-header {
 	margin-top: 20px;
 	padding: 0 10px 10px;
+	background-color: transparent;
 	border-bottom: 1px solid var(--border-strong);
 	border-radius: 0;
 	display: flex;
@@ -82,7 +84,7 @@
 
 .note-content-area {
 	height: stretch;
-	background-color: var(--surface-muted);
+	background-color: var(--accent-light);
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	padding: 5px;
