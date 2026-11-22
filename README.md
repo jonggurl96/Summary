@@ -4,16 +4,16 @@
 
 MSA 기반 서비스 개발
 
-<img src="https://img.shields.io/badge/Spring Boot v4.1.2-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" alt="Spring Boot v4.1.2">
-<img src="https://img.shields.io/badge/Oracle OpenJDK 27-B07219?style=for-the-badge" alt="Oracle OpenJDK 27">
-<img src="https://img.shields.io/badge/PostgreSQL 18-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white" alt="PostgreSQL 18">
-<img src="https://img.shields.io/badge/Node.js LTS v26.13.1-5FA04E?style=for-the-badge&logo=Node.js&logoColor=white" alt="Node.js LTS v26.13.1">
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white" alt="React">
-<img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white" alt="Next.js">
-<img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white" alt="jenkins">
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" alt="Docker">
-<img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=Kubernetes&logoColor=white" alt="Kubernetes">
-<img src="https://img.shields.io/badge/NginX-009639?style=for-the-badge&logo=NginX&logoColor=white" alt="NginX">
+<img src="https://img.shields.io/badge/Spring Boot-v4.1.2-555555?style=plastic&logo=Spring Boot&logoColor=white&labelColor=6DB33F" alt="Spring Boot v4.1.2">
+<img src="https://img.shields.io/badge/Oracle OpenJDK-27-555555?style=plastic&labelColor=B07219" alt="Oracle OpenJDK 27">
+<img src="https://img.shields.io/badge/PostgreSQL-18-555555?style=plastic&logo=PostgreSQL&logoColor=white&labelColor=4169E1" alt="PostgreSQL 18">
+<img src="https://img.shields.io/badge/Node.js LTS-v26.13.1-555555?style=plastic&logo=Node.js&logoColor=white&labelColor=5FA04E" alt="Node.js LTS v26.13.1">
+<img src="https://img.shields.io/badge/React-v19.3.1-555555?style=plastic&logo=React&logoColor=white&labelColor=61DAFB" alt="React">
+<img src="https://img.shields.io/badge/Next.js-000000?style=plastic&logo=Next.js&logoColor=white" alt="Next.js">
+<img src="https://img.shields.io/badge/Jenkins-D24939?style=plastic&logo=Jenkins&logoColor=white" alt="jenkins">
+<img src="https://img.shields.io/badge/Docker-2496ED?style=plastic&logo=Docker&logoColor=white" alt="Docker">
+<img src="https://img.shields.io/badge/Kubernetes-326CE5?style=plastic&logo=Kubernetes&logoColor=white" alt="Kubernetes">
+<img src="https://img.shields.io/badge/NginX-v1.31.9-555555?style=plastic&logo=NginX&logoColor=white&labelColor=009639" alt="NginX">
 
 포트폴리오 몇 년간 천천히 만든다는 마음으로 만들기 시작.
 
