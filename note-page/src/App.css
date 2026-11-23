@@ -71,7 +71,6 @@
 	border-bottom: 1px solid var(--border-strong);
 	border-radius: 0;
 	display: flex;
-	align-items: baseline;
 	justify-content: space-between;
 }
 
@@ -80,6 +79,52 @@
 }
 
 .app-content-header > span {
+}
+
+.app-content-meta {
+	display: inline-flex;
+	width: fit-content;
+	background-color: transparent;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 5px;
+}
+
+.note-editmode-area {
+	background-color: transparent;
+	height: 22px;
+	border: 1px solid var(--border-subtle);
+	display: flex;
+	position: relative;
+}
+
+.note-editmode-button {
+	aspect-ratio: 3 / 2;
+	border-radius: 0;
+	background-color: var(--accent-active);
+	display: inline-flex;
+	justify-content: center;
+	cursor: pointer;
+	padding: 2px;
+}
+
+.note-editmode-button-mask {
+	background-color: var(--accent-dark);
+	opacity: 0.5;
+	height: 100%;
+	width: calc(100% / 3);
+	position: absolute;
+	top: 0;
+	transition: left 0.2s ease-in-out;
+	border-radius: 0;
+	user-select: none;
+	pointer-events: none;
+}
+
+.note-editmode-button > img {
+	height: 100%;
+	background-color: transparent;
 }
 
 .note-content-area {
@@ -93,3 +138,4 @@
 .note-content-area > div {
 	background-color: var(--surface);
 }
+

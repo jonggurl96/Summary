@@ -1,5 +1,6 @@
-import { getTestFolder } from "./repository/folder-repository.js";
-import { getTestNote }   from "./repository/note-repository.js";
+import { getTestEditMode } from "../repository/edit-mode-repository";
+import { getTestFolder }   from "../repository/folder-repository.js";
+import { getTestNote }     from "../repository/note-repository.js";
 
 /**
  * 노트 경로 트리 반환
@@ -47,4 +48,13 @@ export async function getNoteTree(params) {
 	addLeaves(tree);
 
 	return tree;
+}
+
+/**
+ * 노트 편집모드 반환
+ * @param userId {string}
+ * @returns {Promise<EditMode>}
+ */
+export async function getNoteEditModes(userId) {
+	return await getTestEditMode(userId);
 }

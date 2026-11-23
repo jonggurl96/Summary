@@ -1,15 +1,20 @@
 import { create } from 'zustand';
 
+
 /**
- * @template T
- * @template U
- * @param fetchfunction {function(U): Promise<T>}
- * @returns {ZustandStore<T, U>}
+ * fetch function과 dispatch function들을 파라미터로, 공통 타입 store 제공
+ * @template T fetchData 파라미터 타입
+ * @template R data 타입
+ * @param fetchFunction {function(T): Promise<R>}
+ * @param [dispatchFunction = {}] {Object<string, Function>}
+ * @returns {ZustandStore<T, R>}
  */
-export const createZustandStore = fetchfunction => create((set, get) => ({
+export const createCommonStore = (fetchFunction, dispatchFunction = {}) => create((set, get) => ({
 	status   : 'idle',
 	data     : undefined,
 	error    : null,
+	isIdle   : () => get().status === "idle",
+	isLoading: () => get().status === "pending",
 	fetchData: (params) => {
 		// 목록 요청이 중복이면 건너뜀
 		if(get().status === 'pending') return;
@@ -18,11 +23,17 @@ export const createZustandStore = fetchfunction => create((set, get) => ({
 		set({ status: 'pending', data: undefined, error: null });
 
 		try {
-			fetchfunction(params).then(data => {
+			fetchFunction(params).then(data => {
 				set({ status: 'fulfilled', data, error: null });
 			});
 		} catch(error) {
 			set({ status: 'rejected', data: undefined, error: error.message });
 		}
-	}
+	},
+	dispatch : (data) => {
+		if(get().status !== 'fulfilled')
+			throw new Error('dispatchData는 fulfilled 상태에서만 사용할 수 있습니다.');
+		set({ data });
+	},
+	...Object.fromEntries(Object.entries(dispatchFunction).map(([nm, fn]) => ([nm, fn(set, get)])))
 }));

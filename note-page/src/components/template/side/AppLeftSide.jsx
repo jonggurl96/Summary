@@ -1,16 +1,16 @@
 import React, { useEffect }  from 'react';
 import { useDirectoryStore } from "stores/note/path/useDirectoryStore";
+import { useCommonStore }    from "../../../hooks/store/useCommonStore";
 import styles                from './AppLeftSide.module.css';
 
-export default function AppLeftSide({ leftVisible, children }) {
-	const userId = 'SYSTEM';
+export default function AppLeftSide({ leftVisible, userId, children }) {
 
-	/** @type {({ userId: string }) => void} */
-	const fetchData = useDirectoryStore(state => state.fetchData);
+	const { fetchData, isIdle } = useCommonStore(useDirectoryStore);
 
 	useEffect(() => {
-		fetchData({ userId });
-	}, [fetchData, userId]);
+		if(isIdle)
+			fetchData({ userId });
+	}, [fetchData, isIdle, userId]);
 
 	return (
 		<div className={styles.AppLeftSide} style={{ '--app-left-side-width-px': leftVisible ? 'var(--app-side-width-px)' : '90px' }}>

@@ -1,0 +1,32 @@
+* {
+	--block-height: 32px;
+	--font-size: 14px;
+}
+
+.NoteBlock {
+	background-color: var(--surface);
+	padding: 3px 12px;
+	font-size: var(--font-size);
+	height: var(--block-height);
+	border-radius: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid transparent;
+	position: relative;
+	z-index: 0;
+}
+
+.NoteBlock.EditW {
+	cursor: pointer;
+}
+
+.NoteBlock.EditW:hover {
+	border-color: var(--surface-muted);
+	box-shadow: 0 4px 12px var(--shadow-color);
+	z-index: 1;
+}
+
+.TextBlock {
+	background-color: transparent;
+}

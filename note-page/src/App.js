@@ -1,16 +1,19 @@
 import './App.css';
 import { imgSrc }                                  from "api/asset/route/img";
+import Accordion                                   from "components/accordion/Accordion";
 import { ErrorIconMessage }                        from "components/message/with-icon";
+import NoteBlock                                   from "components/note/blocks";
+import { CaptionTable, TableTd, TableTh, TableTr } from "components/table/table";
 import AppContainer                                from "components/template/container/AppContainer";
 import AppFooter                                   from "components/template/footer/AppFooter";
 import AppHeader                                   from "components/template/header/AppHeader";
 import AppLeftSide                                 from "components/template/side/AppLeftSide";
 import AppRightSide                                from "components/template/side/AppRightSide";
 import { Tree }                                    from "components/tree/Tree";
-import { useState }                                from 'react';
-import Accordion                                   from "./components/accordion/Accordion";
-import { CaptionTable, TableTd, TableTh, TableTr } from "./components/table/table";
-import { useDirectoryStore }                       from "./stores/note/path/useDirectoryStore";
+import { useEffect, useState }                     from 'react';
+import { useEditModeStore }                        from "stores/note/edit-mode/useEditModeStore";
+import { useDirectoryStore }                       from "stores/note/path/useDirectoryStore";
+import { useCommonStore }                          from "./hooks/store/useCommonStore";
 
 const SLIDE_LEFT_BUTTON_IMG_SRC = imgSrc("/arrows/first_arrow.svg");
 
@@ -22,9 +25,13 @@ const samplepath = "/sample/path";
 
 export default function App() {
 
-	const loadStatus = useDirectoryStore(state => state.status);
-	const noteHierarchy = useDirectoryStore(state => state.data);
-	const loadError = useDirectoryStore(state => state.error);
+	const userId = 'SYSTEM';
+
+	const {
+		isLoading: directoryLoading,
+		data     : noteHierarchy,
+		error    : loadError
+	} = useCommonStore(useDirectoryStore);
 
 	const [leftVisible, setLeftVisible] = useState(true);
 
@@ -44,6 +51,24 @@ export default function App() {
 		}
 	};
 
+	const {
+		fetchData: loadEditMode,
+		isIdle   : editModeIdle,
+		isLoading: editModeLoading,
+		data     : editMode,
+		error    : loadEditModeError,
+		dispatch : dispatchEditMode
+	} = useCommonStore(useEditModeStore);
+
+	useEffect(() => {
+		if(editModeIdle)
+			loadEditMode(userId);
+	}, [editModeIdle, loadEditMode, userId]);
+
+	const changeEditMode = (modeId) => {
+		dispatchEditMode({ ...editMode, selected: modeId });
+	};
+
 	return (
 		<AppContainer>
 			<AppHeader />
@@ -51,7 +76,7 @@ export default function App() {
 				<main className="app-main">
 
 					{/* 왼쪽 폴더 메뉴 영역 */}
-					<AppLeftSide leftVisible={leftVisible}>
+					<AppLeftSide leftVisible={leftVisible} userId={userId}>
 						<div className="app-left-slide-header" style={{ justifyContent: leftVisible ? 'space-between' : 'center' }}>
 							{leftVisible && <h1>파일찾기</h1>}
 							<button className="app-left-slide-close-button" onClick={() => setLeftVisible(!leftVisible)}>
@@ -62,7 +87,7 @@ export default function App() {
 						<hr />
 
 						<div className="app-left-slide-body">
-							{['idle', 'pending'].includes(loadStatus) && "로딩중"}
+							{directoryLoading && "로딩중"}
 							{noteHierarchy && (<Tree data={noteHierarchy} minimize={!leftVisible} onClick={clickTree} />)}
 							{loadError && <ErrorIconMessage message={loadError} />}
 						</div>
@@ -75,12 +100,32 @@ export default function App() {
 							{/* 노트 제목 영역 */}
 							<div className="app-content-header">
 								<h1>노트 제목</h1>
-								{samplepath && <span>{samplepath}</span>}
+								<div className="app-content-meta">
+									{samplepath && <span>{samplepath}</span>}
+									<div className="note-editmode-area">
+										{editModeLoading && <span>로딩중</span>}
+										{editMode && (
+											<>
+												<div className="note-editmode-button-mask"
+												     style={{ left: `calc(100% / 3 * ${editMode.modes.findIndex(mode => mode.id === editMode.selected)})` }} />
+												{editMode.modes.map(mode => (
+													<div key={mode.id}
+													     className="note-editmode-button"
+													     onClick={() => changeEditMode(mode.id)}
+													     title={mode.name}>
+														<img src={imgSrc(mode.iconPath)} alt={mode.description} />
+													</div>
+												))}
+											</>
+										)}
+										{loadEditModeError && <ErrorIconMessage message={loadEditModeError} />}
+									</div>
+								</div>
 							</div>
 
 							{/* 노트 내용 영역 */}
 							<div className="note-content-area">
-								{Array.from({ length: 100 }).map((_, index) => <div key={index}>내용 {index}</div>)}
+								{Array.from({ length: 100 }).map((_, index) => <NoteBlock key={index} blockType="text" editMode={index % 2 === 0 ? "RW" : "W"}>내용 {index}</NoteBlock>)}
 							</div>
 
 						</div>

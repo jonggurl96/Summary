@@ -1,5 +1,5 @@
-import { getNoteTree }        from "api/note/path/hierarchy/service/note-path-hierarchy-service";
-import { createZustandStore } from "stores/createZustandStore";
+import { getNoteTree }       from "api/note/service/note-service";
+import { createCommonStore } from "stores/createZustandStore";
 
-/** @type {ZustandStore<NotePathHierarchy, {userId: string}>} */
-export const useDirectoryStore = createZustandStore(getNoteTree);
+/** @type {ZustandStore<{userId: string}, NotePathHierarchy>} */
+export const useDirectoryStore = createCommonStore(getNoteTree);
