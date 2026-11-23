@@ -1,17 +1,3 @@
-/**
- * @typedef {NotePathNode & {
- *   [children]: NotePathNode[]
- * }} NotePathHierarchy
- */
-
-/**
- * @typedef {Object} NotePathNode
- * @property {string} id
- * @property {string} parent
- * @property {string} name
- * @property {boolean} isFolder
- * @property {boolean} [isLocked = false]
- */
 import { getTestFolder } from "./repository/folder-repository.js";
 import { getTestNote }   from "./repository/note-repository.js";
 

@@ -1,13 +1,13 @@
 import './App.css';
-import { imgSrc }            from "api/asset/route/img";
-import { ErrorIconMessage }  from "components/message/with-icon";
-import AppContainer          from "components/template/container/AppContainer";
-import AppFooter             from "components/template/footer/AppFooter";
-import AppHeader             from "components/template/header/AppHeader";
-import AppLeftSide           from "components/template/side/AppLeftSide";
-import AppRightSide          from "components/template/side/AppRightSide";
-import { Tree }              from "components/tree/Tree";
-import { useState }          from 'react';
+import { imgSrc }                                  from "api/asset/route/img";
+import { ErrorIconMessage }                        from "components/message/with-icon";
+import AppContainer                                from "components/template/container/AppContainer";
+import AppFooter                                   from "components/template/footer/AppFooter";
+import AppHeader                                   from "components/template/header/AppHeader";
+import AppLeftSide                                 from "components/template/side/AppLeftSide";
+import AppRightSide                                from "components/template/side/AppRightSide";
+import { Tree }                                    from "components/tree/Tree";
+import { useState }                                from 'react';
 import Accordion                                   from "./components/accordion/Accordion";
 import { CaptionTable, TableTd, TableTh, TableTr } from "./components/table/table";
 import { useDirectoryStore }                       from "./stores/note/path/useDirectoryStore";
@@ -15,6 +15,8 @@ import { useDirectoryStore }                       from "./stores/note/path/useD
 const SLIDE_LEFT_BUTTON_IMG_SRC = imgSrc("/arrows/first_arrow.svg");
 
 const SLIDE_RIGHT_BUTTON_IMG_SRC = imgSrc("/arrows/end_arrow.svg");
+
+const MANUAL_ID = "MANUAL";
 
 const samplepath = "/sample/path";
 
@@ -25,6 +27,22 @@ export default function App() {
 	const loadError = useDirectoryStore(state => state.error);
 
 	const [leftVisible, setLeftVisible] = useState(true);
+
+	const [manual, setManual] = useState(MANUAL_ID);
+
+	/**
+	 *
+	 * @param id {string} note id / folder id
+	 * @param type {"NOTE"|"FOLDER"}
+	 */
+	const clickTree = (id, type) => {
+		if(type === "NOTE") {
+			setManual(id);
+		}
+		else if(type === "FOLDER") {
+			console.log(`${id} folder clicked`);
+		}
+	};
 
 	return (
 		<AppContainer>
@@ -45,7 +63,7 @@ export default function App() {
 
 						<div className="app-left-slide-body">
 							{['idle', 'pending'].includes(loadStatus) && "로딩중"}
-							{noteHierarchy && (<Tree data={noteHierarchy} minimize={!leftVisible} />)}
+							{noteHierarchy && (<Tree data={noteHierarchy} minimize={!leftVisible} onClick={clickTree} />)}
 							{loadError && <ErrorIconMessage message={loadError} />}
 						</div>
 					</AppLeftSide>
@@ -86,7 +104,7 @@ export default function App() {
 								</TableTr>
 								<TableTr>
 									<TableTh text="조회권한"></TableTh>
-									<TableTd text="읽기만ㅋ"></TableTd>
+									<TableTd text="조회가능"></TableTd>
 									<TableTh text="조회수"></TableTh>
 									<TableTd text="64"></TableTd>
 								</TableTr>

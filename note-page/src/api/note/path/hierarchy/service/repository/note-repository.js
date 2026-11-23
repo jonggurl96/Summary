@@ -1,17 +1,4 @@
 /**
- * @typedef {Object} Note
- * @property {string} noteId
- * @property {string} folder
- * @property {string} title
- * @property {string} [hashtags = '[]']
- * @property {boolean} [isLocked = false]
- * @property {string} [createdBy = 'SYSTEM']
- * @property {Date} [createdAt = new Date('2026-11-17 17:58:39')]
- * @property {string} [updatedBy = 'SYSTEM']
- * @property {Date} [updatedAt = new Date('2026-11-17 17:58:39')]
- */
-
-/**
  * 최상위 폴더에 위치한 가상의 노트 반환
  * @param {string} _userId
  * @returns {Note[]}

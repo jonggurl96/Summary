@@ -23,7 +23,9 @@ export function Tree(prop) {
 		/** @type {number} */
 		depth = 0,
 		/** @type {boolean} */
-		minimize
+		minimize,
+		/** @type {function(string, "NOTE"|"FOLDER")} */
+		onClick
 	} = prop;
 
 	if(data == null)
@@ -31,17 +33,18 @@ export function Tree(prop) {
 
 	return (
 		<div className={styles.Tree}>
-			<Folder data={data} depth={depth} minimize={minimize} path={data.name} />
+			<Folder data={data} depth={depth} minimize={minimize} path={data.name} onClick={onClick} />
 		</div>
 	);
 }
 
-function Folder({ data, depth, minimize, path }) {
+function Folder({ data, depth, minimize, path, onClick }) {
 	const [folded, setFolded] = useState(depth !== 0);
 
 	const toggleFolder = (depth, f) => {
 		if(depth === 0) setFolded(false);
 		else setFolded(f);
+		onClick(data.id, "FOLDER");
 	};
 
 	const folderIcon = folded ? (data.isLocked ? FOLDER_LOCKED_IMG_SRC : FOLDER_CLOSED_IMG_SRC) : FOLDER_IMG_SRC;
@@ -52,8 +55,8 @@ function Folder({ data, depth, minimize, path }) {
 			<motion.div className={styles.NodeChildren} initial={{ height: folded ? 'auto' : 0 }} animate={{ height: folded ? 0 : 'auto' }} transition={{ duration: 0.2 }}>
 				{!folded && (
 					data.children.map(child => child.isFolder
-						? (<Folder key={child.id} data={child} depth={depth + 1} minimize={minimize} path={`${path}/${child.name}`} />)
-						: (<Note key={child.id} data={child} depth={depth + 1} minimize={minimize} path={`${path}/${child.name}`} />)
+						? (<Folder key={child.id} data={child} depth={depth + 1} minimize={minimize} path={`${path}/${child.name}`} onClick={onClick} />)
+						: (<Note key={child.id} data={child} depth={depth + 1} minimize={minimize} path={`${path}/${child.name}`} onClick={onClick} />)
 					)
 				)}
 			</motion.div>
@@ -61,16 +64,12 @@ function Folder({ data, depth, minimize, path }) {
 	);
 }
 
-function Note({ data, depth, minimize, path }) {
-
-	const openNote = () => {
-		console.log('open note', data);
-	};
+function Note({ data, depth, minimize, path, onClick }) {
 
 	const noteIcon = data.isLocked ? NOTE_LOCKED_IMG_SRC : NOTE_IMG_SRC;
 
 	return (
-		<Item alt="노트" depth={depth} iconSrc={noteIcon} minimize={minimize} name={data.name} path={path} onClick={openNote} />
+		<Item alt="노트" depth={depth} iconSrc={noteIcon} minimize={minimize} name={data.name} path={path} onClick={() => onClick(data.id, "NOTE")} />
 	);
 }
 
