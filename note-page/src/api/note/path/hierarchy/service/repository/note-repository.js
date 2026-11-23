@@ -5,7 +5,7 @@
  */
 export async function getTestNote(_userId) {
 	return [{
-		noteId   : 'NOTICE-0000000000001',
+		noteId   : 'MANUAL',
 		folder   : 'ROOT',
 		title    : '공지사항 테스트',
 		hashtags : '["공지사항", "테스트"]',

@@ -44,7 +44,6 @@ function Folder({ data, depth, minimize, path, onClick }) {
 	const toggleFolder = (depth, f) => {
 		if(depth === 0) setFolded(false);
 		else setFolded(f);
-		onClick(data.id, "FOLDER");
 	};
 
 	const folderIcon = folded ? (data.isLocked ? FOLDER_LOCKED_IMG_SRC : FOLDER_CLOSED_IMG_SRC) : FOLDER_IMG_SRC;
