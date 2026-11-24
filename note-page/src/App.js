@@ -125,7 +125,7 @@ export default function App() {
 
 							{/* 노트 내용 영역 */}
 							<div className="note-content-area">
-								{Array.from({ length: 100 }).map((_, index) => <NoteBlock key={index} blockType="text" editMode={index % 2 === 0 ? "RW" : "W"}>내용 {index}</NoteBlock>)}
+								{Array.from({ length: 100 }).map((_, index) => <NoteBlock key={index} blockType="text" editMode={editMode?.selected}>내용 {index}</NoteBlock>)}
 							</div>
 
 						</div>
