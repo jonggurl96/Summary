@@ -1,6 +1,6 @@
+import { imgSrc }                  from "api/asset/route/img";
 import clsx                        from "clsx";
 import React, { useRef, useState } from 'react';
-import { createPortal }            from "react-dom";
 import styles                      from './blocks.module.css';
 
 export default function NoteBlock(props) {
@@ -21,32 +21,50 @@ export default function NoteBlock(props) {
 
 	const [hoverOnBlock, setHoverOnBlock] = useState(false);
 
-	const [rect, setRect] = useState({ top: 0, left: 0 });
-
 	const showHandle = () => {
 		if(!editable) return;
 		setHoverOnBlock(true);
-		const { top, left } = blockRef.current.getBoundingClientRect();
-		setRect({ top: top + 5, left: left - 33 });
 	};
 
 	const editable = ["RW", "W"].includes(editMode);
 
+	const [hoverOnCommentArea, setHoverOnCommentArea] = useState(false);
+
 	return (
-		<div ref={blockRef} className={clsx(styles.NoteBlock, editable && styles.Editable)} onMouseOver={showHandle}>
-			{hoverOnBlock && editable && createPortal(<BlockHandle rect={rect} />, document.body)}
-			{/* create portal이 아니라 overflow랑 등등 연계해서 만들기 */}
+		<div ref={blockRef} className={clsx(styles.NoteBlock)} onMouseOver={showHandle} onMouseLeave={() => setHoverOnBlock(false)}>
+			{/* 버튼 영역 */}
+			<div className={styles.HandleArea}>
+				<InsertBlockButton visible={hoverOnBlock && editable} />
+				<BlockHandle visible={hoverOnBlock && editable} />
+			</div>
+
+			{/* 블럭 영역 */}
 			<div className={styles.BlockWrapper}>
 				{BLOCK_TYPE === "TEXT" && <TextBlock>{children}</TextBlock>}
+			</div>
+
+			{/* 답글 영역 */}
+			<div className={styles.CommentButtonArea} onMouseOver={() => setHoverOnCommentArea(true)} onMouseLeave={() => setHoverOnCommentArea(false)}>
+				{hoverOnCommentArea && <div className={clsx(styles.BlockButton, styles.BlockButtonWrapper)}
+				                            style={{ backgroundImage: `url(${imgSrc("/balloons/balloon_plus_i.svg")})` }}
+				                            title="댓글"></div>}
 			</div>
 		</div>
 	);
 }
 
-function BlockHandle({ rect }) {
+function InsertBlockButton({ visible, ...rest }) {
 	return (
-		<div className={styles.BlockHandle} style={{ ...rect }}>
-			<div className={styles.Handle}></div>
+		<div className={styles.BlockButtonWrapper} {...rest}>
+			{visible && <div className={styles.BlockButton} style={{ backgroundImage: `url(${imgSrc("/plus/plus_i.svg")})` }}></div>}
+		</div>
+	);
+}
+
+function BlockHandle({ visible, ...rest }) {
+	return (
+		<div className={styles.BlockButtonWrapper} {...rest}>
+			{visible && <div className={styles.BlockButton} style={{ backgroundImage: `url(${imgSrc("/menu/hv-23.svg")})` }}></div>}
 		</div>
 	);
 }

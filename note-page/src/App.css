@@ -59,7 +59,7 @@
 }
 
 .app-content-body {
-	width: 90%;
+	width: 80%;
 	max-width: 50vw;
 	background-color: transparent;
 }
@@ -129,13 +129,13 @@
 
 .note-content-area {
 	height: stretch;
-	background-color: var(--accent-light);
+	background-color: transparent;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	padding: 5px;
+	max-width: 100%;
 }
 
 .note-content-area > div {
 	background-color: var(--surface);
 }
-
