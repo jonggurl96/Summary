@@ -18,13 +18,15 @@ export function TextBlock({ id, text, editable }) {
 	return <EditableBlock editable={editable}
 	                      viewerBlock={
 		                      <span className={styles.TextBlockNotEditable}>{textVal}</span>
-	                      } editorBlock={<input type="text"
-	                                            id={id}
-	                                            className={styles.TextBlock} placeholder="/를 눌러 블럭을 삽입하세요."
-	                                            value={textVal}
-	                                            onChange={e => setTextVal(e.target.value)}
-	                                            autoFocus={true}
-	                                            disabled={!editable} />} />;
+	                      } editorBlock={
+		                        <input type="text"
+		                               id={id}
+		                               className={styles.TextBlock} placeholder="/를 눌러 블럭을 삽입하세요."
+		                               value={textVal}
+		                               onChange={e => setTextVal(e.target.value)}
+		                               autoFocus={true}
+		                               disabled={!editable} />
+	                        } />;
 }
 
 /**
