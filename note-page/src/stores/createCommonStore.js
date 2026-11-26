@@ -16,6 +16,7 @@ export const createCommonStore = (fetchFunction, dispatchFunction = {}) => creat
 	error    : null,
 	isIdle   : () => get().status === "idle",
 	isLoading: () => get().status === "pending",
+	isLoaded : () => get().status === "fulfilled",
 	fetchData: (params) => {
 		// 목록 요청이 중복이면 건너뜀
 		if(get().status === 'pending') return;

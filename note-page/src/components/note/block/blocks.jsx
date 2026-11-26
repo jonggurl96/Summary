@@ -1,8 +1,7 @@
 import { imgSrc }                  from "api/asset/route/img";
 import clsx                        from "clsx";
 import styles                      from 'components/note/block/blocks.module.css';
-import { H1, H2, H3, H4, H5, H6 }  from "components/note/block/heading/headings";
-import { TextBlock }               from "components/note/block/text/text";
+import { WriterBlock }             from "components/note/block/writer/writer";
 import React, { useRef, useState } from 'react';
 
 export default function NoteBlock(props) {
@@ -14,6 +13,12 @@ export default function NoteBlock(props) {
 
 		/** @type {boolean} */
 		editable,
+
+		/** @type {boolean} */
+		focus,
+
+		/** @type {function(number)} */
+		changeFocus,
 
 		children
 	} = props;
@@ -32,7 +37,7 @@ export default function NoteBlock(props) {
 	const [hoverOnCommentArea, setHoverOnCommentArea] = useState(false);
 
 	return (
-		<div ref={blockRef} className={clsx(styles.NoteBlock, styles.Editable)} onMouseOver={showHandle} onMouseLeave={() => setHoverOnBlock(false)}>
+		<div ref={blockRef} className={styles.NoteBlock} onMouseOver={showHandle} onMouseLeave={() => setHoverOnBlock(false)}>
 			{/* 버튼 영역 */}
 			<div className={styles.HandleArea}>
 				<InsertBlockButton visible={hoverOnBlock && editable} />
@@ -41,13 +46,14 @@ export default function NoteBlock(props) {
 
 			{/* 블럭 영역 */}
 			<div className={styles.BlockWrapper}>
-				{BLOCK_TYPE === "TEXT" && <TextBlock id={id} text={children.toString()} editable={editable} />}
-				{BLOCK_TYPE === "H1" && <H1>{children}</H1>}
-				{BLOCK_TYPE === "H2" && <H2>{children}</H2>}
-				{BLOCK_TYPE === "H3" && <H3>{children}</H3>}
-				{BLOCK_TYPE === "H4" && <H4>{children}</H4>}
-				{BLOCK_TYPE === "H5" && <H5>{children}</H5>}
-				{BLOCK_TYPE === "H6" && <H6>{children}</H6>}
+				{/*{BLOCK_TYPE === "TEXT" && <TextBlock id={id} text={children.toString()} editable={editable} focus={focus} />}*/}
+				{/*{BLOCK_TYPE === "H1" && <H1 editable={editable} focus={focus}>{children}</H1>}*/}
+				{/*{BLOCK_TYPE === "H2" && <H2 editable={editable} focus={focus}>{children}</H2>}*/}
+				{/*{BLOCK_TYPE === "H3" && <H3 editable={editable} focus={focus}>{children}</H3>}*/}
+				{/*{BLOCK_TYPE === "H4" && <H4 editable={editable} focus={focus}>{children}</H4>}*/}
+				{/*{BLOCK_TYPE === "H5" && <H5 editable={editable} focus={focus}>{children}</H5>}*/}
+				{/*{BLOCK_TYPE === "H6" && <H6 editable={editable} focus={focus}>{children}</H6>}*/}
+				<WriterBlock>{children}</WriterBlock>
 			</div>
 
 			{/* 답글 영역 */}

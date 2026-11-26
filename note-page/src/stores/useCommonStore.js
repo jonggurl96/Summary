@@ -10,6 +10,7 @@ export const useCommonStore = store => ({
 	error    : store(state => state.error),
 	isIdle   : store(state => state.isIdle()),
 	isLoading: store(state => state.isLoading()),
+	isLoaded : store(state => state.isLoaded()),
 	fetchData: store(state => state.fetchData),
 	dispatch : store(state => state.dispatch),
 });

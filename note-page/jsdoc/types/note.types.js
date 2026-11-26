@@ -74,3 +74,25 @@
  * @property {NoteBlockEditMode} selected
  * @property {{id: NoteBlockEditMode, name: string, iconPath: string, description: string}[]} modes
  */
+
+/**
+ * @typedef {Object} NoteDetail
+ * @property {string} noteId
+ * @property {string} title
+ * @property {string[]} hashtags
+ * @property {string} createdBy
+ * @property {Date} createdAt
+ * @property {string} updatedBy
+ * @property {Date} updatedAt
+ * @property {NoteBlock[]} blocks
+ */
+
+/**
+ * @typedef {Object} NoteBlock
+ * @property {string} blockId
+ * @property {string} parentId
+ * @property {string} noteId
+ * @property {BlockTypes} blockType
+ * @property {number} position
+ * @property {string} content
+ */

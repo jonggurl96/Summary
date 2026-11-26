@@ -15,18 +15,23 @@ export function TextBlock({ id, text, editable }) {
 
 	const [textVal, setTextVal] = useState(text);
 
-	return <EditableBlock editable={editable}
-	                      viewerBlock={
-		                      <span className={styles.TextBlockNotEditable}>{textVal}</span>
-	                      } editorBlock={
-		                        <input type="text"
-		                               id={id}
-		                               className={styles.TextBlock} placeholder="/를 눌러 블럭을 삽입하세요."
-		                               value={textVal}
-		                               onChange={e => setTextVal(e.target.value)}
-		                               autoFocus={true}
-		                               disabled={!editable} />
-	                        } />;
+	return (
+		<EditableBlock editable={editable}
+		               viewerBlock={<span className={styles.TextBlockNotEditable}>{textVal}</span>}
+		               editorBlock={<InputTextBlock id={id} editable={editable} textVal={textVal} setTextVal={setTextVal} />} />
+	);
+}
+
+export function InputTextBlock({ id, editable, textVal, setTextVal }) {
+	return (
+		<textarea rows={1}
+		          id={id}
+		          className={styles.TextBlock} placeholder="/를 눌러 블럭을 삽입하세요."
+		          value={textVal}
+		          onChange={e => setTextVal(e.target.value)}
+		          autoFocus={true}
+		          disabled={!editable} />
+	);
 }
 
 /**

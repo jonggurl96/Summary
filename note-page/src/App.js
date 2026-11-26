@@ -10,10 +10,11 @@ import AppHeader                                   from "components/template/hea
 import AppLeftSide                                 from "components/template/side/AppLeftSide";
 import AppRightSide                                from "components/template/side/AppRightSide";
 import { Tree }                                    from "components/tree/Tree";
-import { useCommonStore }                          from "hooks/store/useCommonStore";
 import { useEffect, useState }                     from 'react';
+import { useNoteDetailStore }                      from "stores/note/detail/useNoteDetailStore";
 import { useEditModeStore }                        from "stores/note/edit-mode/useEditModeStore";
 import { useDirectoryStore }                       from "stores/note/path/useDirectoryStore";
+import { useCommonStore }                          from "stores/useCommonStore";
 
 const SLIDE_LEFT_BUTTON_IMG_SRC = imgSrc("/arrows/first_arrow.svg");
 
@@ -36,6 +37,18 @@ export default function App() {
 	const [leftVisible, setLeftVisible] = useState(true);
 
 	const [manual, setManual] = useState(MANUAL_ID);
+
+	const {
+		isLoading: noteDetailLoading,
+		isLoaded : noteDetailLoaded,
+		data     : noteDetail,
+		error    : loadNoteDetailError,
+		fetchData: loadNoteDetail
+	} = useCommonStore(useNoteDetailStore);
+
+	useEffect(() => {
+		loadNoteDetail(manual);
+	}, [manual]);
 
 	/**
 	 *
@@ -60,7 +73,8 @@ export default function App() {
 		dispatch : dispatchEditMode
 	} = useCommonStore(useEditModeStore);
 
-	const editable = useEditModeStore(state => state.isEditable());
+	// const editable = useEditModeStore(state => state.isEditable());
+	const editable = true;
 
 	useEffect(() => {
 		if(editModeIdle)
@@ -71,7 +85,31 @@ export default function App() {
 		dispatchEditMode({ ...editMode, selected: modeId });
 	};
 
-	const blockCnt = 100;
+	const [focusIdx, setFocusIdx] = useState({ blockLine: 0, line: 0, col: 0 });
+
+	// const changeFocus = useCallback(e => {
+	// 	switch(e.key) {
+	// 		case 'ArrowUp':
+	// 			if(focusIdx > 0)
+	// 				setFocusIdx(focusIdx - 1);
+	// 			break;
+	// 		case 'ArrowDown':
+	// 			if(focusIdx < blockCnt - 1)
+	// 				setFocusIdx(focusIdx + 1);
+	// 			break;
+	// 	}
+	// 	setFocusIdx(idx);
+	// }, [focusIdx]);
+
+	const [noteData, setNoteData] = useState(noteDetail);
+
+	useEffect(() => {
+		setNoteData(noteDetail);
+	}, [noteDetail]);
+
+	useEffect(() => {
+
+	}, []);
 
 	return (
 		<AppContainer>
@@ -129,8 +167,16 @@ export default function App() {
 
 							{/* 노트 내용 영역 */}
 							<div className="note-content-area">
-								{Array.from({ length: blockCnt }).map((_, index) => <NoteBlock key={index} id={index} blockType={index % 7 === 0 ? 'text' : `h${index % 7}`}
-								                                                               editable={editable}>내용 {index}</NoteBlock>)}
+								{noteDetailLoading || !noteData && <span>로딩중</span>}
+								{loadNoteDetailError && <span>에러</span>}
+								{noteDetailLoaded && noteData && noteData.blocks.map((block, index) => (
+									<NoteBlock key={block.blockId} id={block.blockId}
+									           blockType={block.blockType}
+									           editable={editable}
+									           focus={focusIdx.blockLine === index} changeFocus={setFocusIdx}>
+										{block.content}
+									</NoteBlock>
+								))}
 							</div>
 
 						</div>
@@ -142,15 +188,15 @@ export default function App() {
 							<CaptionTable>
 								<TableTr>
 									<TableTh text="작성자"></TableTh>
-									<TableTd text="SYSTEM"></TableTd>
+									<TableTd text={noteData?.createdBy}></TableTd>
 									<TableTh text="작성일시"></TableTh>
-									<TableTd autoNewline={true} text="0000.01.01 00:00:00"></TableTd>
+									<TableTd autoNewline={true} text={noteData?.createdAt.toISOString()}></TableTd>
 								</TableTr>
 								<TableTr>
 									<TableTh text="수정자"></TableTh>
-									<TableTd text="SYSTEM"></TableTd>
+									<TableTd text={noteData?.updatedBy}></TableTd>
 									<TableTh text="수정일시"></TableTh>
-									<TableTd autoNewline={true} text="2026.11.21 22:46:18"></TableTd>
+									<TableTd autoNewline={true} text={noteData?.updatedAt.toISOString()}></TableTd>
 								</TableTr>
 								<TableTr>
 									<TableTh text="조회권한"></TableTh>

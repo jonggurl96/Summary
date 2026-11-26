@@ -1,6 +1,6 @@
 import React, { useEffect }  from 'react';
 import { useDirectoryStore } from "stores/note/path/useDirectoryStore";
-import { useCommonStore }    from "../../../hooks/store/useCommonStore";
+import { useCommonStore }    from "stores/useCommonStore";
 import styles                from './AppLeftSide.module.css';
 
 export default function AppLeftSide({ leftVisible, userId, children }) {

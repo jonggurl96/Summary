@@ -14,7 +14,8 @@
  * @property {T|undefined} data
  * @property {string|null} error 에러메시지
  * @property {function(): boolean} isIdle 상태메시지가 idle인 경우 참.
- * @property {function(): boolean} isLoading 상태메시지가 idle 또는 pending인 경우 참.
+ * @property {function(): boolean} isLoading 상태메시지가 pending인 경우 참.
+ * @property {function(): boolean} isLoaded 상태메시지가 fulfilled인 경우 참.
  * @property {function(R)} fetchData 실제 fetch() 함수를 실행 및 파싱하여 data에 저장하는 함수
  * @property {function(R)} dispatch fetch된 data를 직접 설정하는 함수
  */
@@ -52,6 +53,7 @@
  *   error: string|null,
  *   isIdle: boolean,
  *   isLoading: boolean,
+ *   isLoaded: boolean,
  *   fetchData: function(T): void,
  *   dispatch: function(R): void,
  * }} CommonStore<T, R>
