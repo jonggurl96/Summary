@@ -6,10 +6,11 @@ import { create } from 'zustand';
  * @template T fetchData 파라미터 타입
  * @template R data 타입
  * @param fetchFunction {function(T): Promise<R>}
- * @param [dispatchFunction = {}] {Object<string, Function>}
+ * @param [dispatchFunction = {}] {Object<string, function(set, get): function()>}
  * @returns {ZustandStore<T, R>}
  */
 export const createCommonStore = (fetchFunction, dispatchFunction = {}) => create((set, get) => ({
+	/** @type {ZustandApiStatus} */
 	status   : 'idle',
 	data     : undefined,
 	error    : null,

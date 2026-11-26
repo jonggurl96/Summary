@@ -1,0 +1,24 @@
+.TextBlock {
+	cursor: text;
+	background-color: transparent;
+}
+
+.TextBlock input {
+	width: 100%;
+	height: 100%;
+	outline: none;
+}
+
+.TextBlock input::placeholder {
+	color: transparent;
+}
+
+.TextBlock input:focus::placeholder {
+	color: var(--foreground-muted);
+}
+
+.TextBlockNotEditable {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}

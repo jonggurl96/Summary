@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind utilities;
+
 * {
 	font-family: "Pretendard Variable", "Pretendard GOV", source-code-pro, -apple-system, sans-serif;
 	--default-font-size: 12px;
@@ -96,11 +99,11 @@ h2 {--heading-size: 22px;padding-left: 4px;}
 
 h3 {--heading-size: 20px;padding-left: 8px;}
 
-h4 {--heading-size: 18px;padding-left: 10px;}
+h4 {--heading-size: 18px;padding-left: 12px;}
 
-h5 {--heading-size: 16px;padding-left: 12px;}
+h5 {--heading-size: 16px;padding-left: 16px;}
 
-h6 {--heading-size: 14px;padding-left: 14px;}
+h6 {--heading-size: 14px;padding-left: 18px;}
 
 hr {color: var(--border-strong);}
 
@@ -130,4 +133,10 @@ input[type="button"]:hover, input[type="button"]:hover > img {
 .auto-newline {
 	white-space: wrap !important;
 	word-break: auto-phrase !important;
+}
+
+input[type="text"], textarea {
+	outline: none;
+	border: none;
+	appearance: none;
 }

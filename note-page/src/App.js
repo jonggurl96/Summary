@@ -2,7 +2,7 @@ import './App.css';
 import { imgSrc }                                  from "api/asset/route/img";
 import Accordion                                   from "components/accordion/Accordion";
 import { ErrorIconMessage }                        from "components/message/with-icon";
-import NoteBlock                                   from "components/note/blocks";
+import NoteBlock                                   from "components/note/block/blocks";
 import { CaptionTable, TableTd, TableTh, TableTr } from "components/table/table";
 import AppContainer                                from "components/template/container/AppContainer";
 import AppFooter                                   from "components/template/footer/AppFooter";
@@ -10,10 +10,10 @@ import AppHeader                                   from "components/template/hea
 import AppLeftSide                                 from "components/template/side/AppLeftSide";
 import AppRightSide                                from "components/template/side/AppRightSide";
 import { Tree }                                    from "components/tree/Tree";
+import { useCommonStore }                          from "hooks/store/useCommonStore";
 import { useEffect, useState }                     from 'react';
 import { useEditModeStore }                        from "stores/note/edit-mode/useEditModeStore";
 import { useDirectoryStore }                       from "stores/note/path/useDirectoryStore";
-import { useCommonStore }                          from "./hooks/store/useCommonStore";
 
 const SLIDE_LEFT_BUTTON_IMG_SRC = imgSrc("/arrows/first_arrow.svg");
 
@@ -60,6 +60,8 @@ export default function App() {
 		dispatch : dispatchEditMode
 	} = useCommonStore(useEditModeStore);
 
+	const editable = useEditModeStore(state => state.isEditable());
+
 	useEffect(() => {
 		if(editModeIdle)
 			loadEditMode(userId);
@@ -70,8 +72,6 @@ export default function App() {
 	};
 
 	const blockCnt = 100;
-
-	const [blockHoverIdx, setBlockHoverIdx] = useState(-1);
 
 	return (
 		<AppContainer>
@@ -129,7 +129,8 @@ export default function App() {
 
 							{/* 노트 내용 영역 */}
 							<div className="note-content-area">
-								{Array.from({ length: blockCnt }).map((_, index) => <NoteBlock key={index} blockType="text" editMode={editMode?.selected}>내용 {index}</NoteBlock>)}
+								{Array.from({ length: blockCnt }).map((_, index) => <NoteBlock key={index} id={index} blockType={index % 7 === 0 ? 'text' : `h${index % 7}`}
+								                                                               editable={editable}>내용 {index}</NoteBlock>)}
 							</div>
 
 						</div>

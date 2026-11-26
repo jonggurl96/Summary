@@ -10,7 +10,7 @@
 
 .NoteBlock {
 	background-color: var(--surface);
-	padding: var(--block-padding-v) var(--block-padding-h);
+	/*padding: var(--block-padding-v) var(--block-padding-h);*/
 	font-size: var(--font-size);
 	min-height: var(--block-height);
 	border-radius: 0;
@@ -70,17 +70,14 @@
 .BlockWrapper {
 	flex: 1;
 	background-color: transparent;
-	padding: 2px;
+	/*padding: 2px;*/
 	min-height: var(--block-wrapper-h);
+	display: flex;
+	align-items: center;
 }
 
 .BlockWrapper * {
 	word-break: break-word;
 	overflow: visible;
 	white-space: wrap;
-}
-
-.TextBlock {
-	cursor: text;
-	background-color: transparent;
 }
