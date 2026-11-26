@@ -1,7 +1,7 @@
+import { imgSrc }                  from "api/asset/route/img";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from 'react';
-import { imgSrc }          from "../../api/asset/route/img";
-import styles              from './Accordion.module.css';
+import React, { useState }         from 'react';
+import styles                      from './Accordion.module.css';
 
 const ACCORDION_UP = imgSrc("/arrows/accordion_up.svg");
 
