@@ -4,7 +4,10 @@
 * {
 	font-family: "Pretendard Variable", "Pretendard GOV", source-code-pro, -apple-system, sans-serif;
 	--default-font-size: 12px;
-	font-size: var(--default-font-size);
+	--font-size: var(--default-font-size);
+	font-size: var(--font-size);
+	--line-height-pad: 2;
+	--tab-size: 4;
 }
 
 body {
@@ -139,4 +142,9 @@ input[type="text"], textarea {
 	outline: none;
 	border: none;
 	appearance: none;
+}
+
+pre {
+	white-space: pre-wrap;
+	word-break: break-word;
 }

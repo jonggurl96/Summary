@@ -10,7 +10,8 @@ import AppHeader                                   from "components/template/hea
 import AppLeftSide                                 from "components/template/side/AppLeftSide";
 import AppRightSide                                from "components/template/side/AppRightSide";
 import { Tree }                                    from "components/tree/Tree";
-import { useEffect, useState }                     from 'react';
+import { useCallback, useEffect, useState }        from 'react';
+import { useBlockCommandStore }                    from "stores/note/block/useBlockCommandStore";
 import { useNoteDetailStore }                      from "stores/note/detail/useNoteDetailStore";
 import { useEditModeStore }                        from "stores/note/edit-mode/useEditModeStore";
 import { useDirectoryStore }                       from "stores/note/path/useDirectoryStore";
@@ -87,29 +88,32 @@ export default function App() {
 
 	const [focusIdx, setFocusIdx] = useState({ blockLine: 0, line: 0, col: 0 });
 
-	// const changeFocus = useCallback(e => {
-	// 	switch(e.key) {
-	// 		case 'ArrowUp':
-	// 			if(focusIdx > 0)
-	// 				setFocusIdx(focusIdx - 1);
-	// 			break;
-	// 		case 'ArrowDown':
-	// 			if(focusIdx < blockCnt - 1)
-	// 				setFocusIdx(focusIdx + 1);
-	// 			break;
-	// 	}
-	// 	setFocusIdx(idx);
-	// }, [focusIdx]);
-
-	const [noteData, setNoteData] = useState(noteDetail);
+	/** @type {useState<NoteDetail>} */
+	const [noteData, setNoteData] = useState(null);
 
 	useEffect(() => {
-		setNoteData(noteDetail);
-	}, [noteDetail]);
+		if(!noteData && noteDetail)
+			setNoteData(noteDetail);
+	}, [noteData, noteDetail]);
 
-	useEffect(() => {
+	const editNoteData = useCallback((i, editBlock) => {
+		setNoteData({
+			...noteData,
+			updatedAt: new Date(),
+			updatedBy: userId,
+			blocks   : noteData.blocks.map((block, idx) => idx === i ? editBlock : block)
+		});
+	}, [noteData, userId]);
 
-	}, []);
+	const {
+		isIdle   : commandLoadIdle,
+		isLoading: commandLoading,
+		isLoaded : commandLoaded,
+		error    : commandLoadError,
+		data     : blockCommands
+	} = useCommonStore(useBlockCommandStore);
+
+	const findCommand = useBlockCommandStore(state => state.findCommand);
 
 	return (
 		<AppContainer>
@@ -170,12 +174,9 @@ export default function App() {
 								{noteDetailLoading || !noteData && <span>로딩중</span>}
 								{loadNoteDetailError && <span>에러</span>}
 								{noteDetailLoaded && noteData && noteData.blocks.map((block, index) => (
-									<NoteBlock key={block.blockId} id={block.blockId}
-									           blockType={block.blockType}
-									           editable={editable}
-									           focus={focusIdx.blockLine === index} changeFocus={setFocusIdx}>
-										{block.content}
-									</NoteBlock>
+									<NoteBlock key={block.blockId}
+									           index={index} editable={editable}
+									           data={block} setData={editBlock => editNoteData(index, editBlock)} />
 								))}
 							</div>
 

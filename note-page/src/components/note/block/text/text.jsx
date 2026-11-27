@@ -1,49 +1,79 @@
-import clsx          from "clsx";
-import EditableBlock from "components/note/block/editable/EditableBlock";
-import styles        from 'components/note/block/text/text.module.css';
-import { useState }  from "react";
+import styles                  from 'components/note/block/text/text.module.css';
+import { useEffect, useRef }   from "react";
+import { useBlockSelectStore } from "stores/note/block/useBlockSelectStore";
 
 /**
  *
  * @param props
  * @param props.text {string}
- * @param props.editable {boolean}
+ * @param [props.style] {React.CSSProperties}
  * @returns {React.JSX.Element}
  * @constructor
  */
-export function TextBlock({ id, text, editable }) {
+export function TextBlock({ id, index, text, style }) {
 
-	const [textVal, setTextVal] = useState(text);
+	const textareaRef = useRef(null);
+
+	const { selectionCaret, editable, focus, focusNext, focusPrev, focusUp, focusDown, changeCaret } = useBlockSelectStore();
+	const isFocused = useBlockSelectStore(state => state.isFocused(index));
+	const isSelected = useBlockSelectStore(state => state.isSelected(index));
+
+	const selectHandler = e => {
+		e.preventDefault();
+
+		/** @type {HTMLTextAreaElement} */
+		const textarea = e.target;
+
+		const caret = selectionCaret > text.length ? text.length : selectionCaret;
+		textarea.setSelectionRange(caret, caret);
+	};
+
+	const keydownHandler = e => {
+		if(!isFocused) return;
+
+		/** @type {HTMLTextAreaElement} */
+		const textarea = e.target;
+
+		if(e.key === 'ArrowDown') {
+			e.preventDefault();
+			focusDown();
+		}
+		else if(e.key === 'ArrowUp') {
+			e.preventDefault();
+			focusUp();
+		}
+		else if(e.key === 'ArrowLeft') {
+			if(selectionCaret === 0) {
+				e.preventDefault();
+				focusPrev();
+			}
+		}
+		else if(e.key === 'ArrowRight') {
+			if(text.length === selectionCaret) {
+				e.preventDefault();
+				focusNext();
+			}
+		}
+	};
+
+	useEffect(() => {
+		if(isFocused) {
+			textareaRef.current.focus();
+			if(selectionCaret === -1) {
+				changeCaret(text.length);
+				return;
+			}
+			textareaRef.current.setSelectionRange(selectionCaret, selectionCaret);
+		}
+	}, [isFocused, selectionCaret, textareaRef, text]);
 
 	return (
-		<EditableBlock editable={editable}
-		               viewerBlock={<span className={styles.TextBlockNotEditable}>{textVal}</span>}
-		               editorBlock={<InputTextBlock id={id} editable={editable} textVal={textVal} setTextVal={setTextVal} />} />
-	);
-}
-
-export function InputTextBlock({ id, editable, textVal, setTextVal }) {
-	return (
-		<textarea rows={1}
-		          id={id}
-		          className={styles.TextBlock} placeholder="/를 눌러 블럭을 삽입하세요."
-		          value={textVal}
-		          onChange={e => setTextVal(e.target.value)}
-		          autoFocus={true}
-		          disabled={!editable} />
-	);
-}
-
-/**
- *
- * @param props
- * @param props.cssStyle {string} TailwindCSS style class name
- * @param props.children
- * @returns {React.JSX.Element}
- * @constructor
- */
-function InlineText({ cssStyle, children }) {
-	return (
-		<span className={clsx(styles.TextBlock, cssStyle)}>{children}</span>
+		<textarea ref={textareaRef} rows={1} id={id} className={styles.TextBlock} placeholder="/를 눌러 블럭을 삽입하세요."
+		          autoFocus={true} value={text}
+		          style={style}
+		          onFocus={() => focus(index)}
+			// onSelect={selectHandler}
+			        onKeyDown={keydownHandler}
+			        disabled={!editable} />
 	);
 }

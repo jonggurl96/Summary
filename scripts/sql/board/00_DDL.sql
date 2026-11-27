@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS note_block_types
 		PRIMARY KEY,
 	type_description TEXT,
 	shortcut VARCHAR(20),
+	shortcut_sample VARCHAR(20),
 	auto_closing_id VARCHAR(20),
 	command_en VARCHAR(20),
 	command_kr VARCHAR(20),
@@ -75,6 +76,7 @@ COMMENT ON TABLE note_block_types IS '사용자 노트 블럭 타입 테이블';
 COMMENT ON COLUMN note_block_types.block_type IS '노트 블럭 타입 식별자';
 COMMENT ON COLUMN note_block_types.type_description IS '노트 블럭 타입 설명';
 COMMENT ON COLUMN note_block_types.shortcut IS '단축키';
+COMMENT ON COLUMN note_block_types.shortcut_sample IS '단축키 예시';
 COMMENT ON COLUMN note_block_types.auto_closing_id IS '자동 닫기 식별자';
 COMMENT ON COLUMN note_block_types.command_en IS '영문 명령어';
 COMMENT ON COLUMN note_block_types.command_kr IS '한글 명령어';

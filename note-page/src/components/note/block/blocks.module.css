@@ -74,8 +74,6 @@
 	align-items: center;
 }
 
-.BlockWrapper * {
-	word-break: break-word;
-	overflow: visible;
-	white-space: wrap;
+.BlockWrapper, .BlockWrapper * {
+	border-radius: 0;
 }

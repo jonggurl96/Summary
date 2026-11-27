@@ -96,3 +96,13 @@
  * @property {number} position
  * @property {string} content
  */
+
+/**
+ * @typedef {Object} BlockCommand
+ * @property {BlockTypes} blockType 노트 블럭 타입 식별자
+ * @property {string} typeDescription 노트 블럭 타입 설명
+ * @property {string} shortcut 단축키
+ * @property {string} shortcutSample 단축키 예시
+ * @property {string} commandEn 영문 명령어
+ * @property {string} commandKr 한글 명령어
+ */

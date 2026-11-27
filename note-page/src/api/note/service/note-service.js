@@ -1,6 +1,6 @@
-import { getTestEditMode }              from "../repository/edit-mode-repository";
-import { getTestFolder }                from "../repository/folder-repository.js";
-import { getTestNote, getTestNoteData } from "../repository/note-repository.js";
+import { getTestEditMode }                                        from "../repository/edit-mode-repository";
+import { getTestFolder }                                          from "../repository/folder-repository.js";
+import { getTestNote, getTestNoteBlockCommands, getTestNoteData } from "../repository/note-repository.js";
 
 /**
  * 노트 경로 트리 반환
@@ -66,4 +66,11 @@ export async function getNoteEditModes(userId) {
  */
 export async function getNoteDetails(noteId) {
 	return await getTestNoteData(noteId);
+}
+
+/**
+ * @returns {Promise<BlockCommand[]>}
+ */
+export async function getNoteBlockCommands() {
+	return await getTestNoteBlockCommands();
 }

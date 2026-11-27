@@ -52,7 +52,26 @@ export function H6({ editable, focus, children }) {
 	);
 }
 
-function HeadingWrapper({ cnt, editable, focus, headingText, children }) {
+function HeadingWrapper({ children }) {
+
+	const [folded, setFolded] = useState(false);
+
+	return (
+		<div className={styles.HeadingWrapper}>
+			<div className={styles.HeadingIconWrapper} onClick={() => setFolded(!folded)}>
+				<div className={styles.HeadingIcon} style={{
+					backgroundImage: `url(${imgSrc("/arrows/accordion_arrow.svg")})`,
+					transform      : folded ? "rotateX(0deg)" : "rotateX(180deg)"
+				}}></div>
+			</div>
+			<div className={styles.HeadingContentWrapper}>
+				<div className={styles.HeadingTagWrapper}>{children}</div>
+			</div>
+		</div>
+	);
+}
+
+function _HeadingWrapper({ cnt, editable, focus, headingText, children }) {
 
 	const [folded, setFolded] = useState(false);
 
