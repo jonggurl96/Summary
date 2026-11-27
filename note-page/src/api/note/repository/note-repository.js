@@ -220,7 +220,7 @@ export async function getTestNoteData(noteId) {
 			noteId,
 			blockType: 'code',
 			position : 1,
-			content  : '제목 영역'
+			content  : '             제목 영역'
 		}, {
 			blockId  : 'BLOCK_0028',
 			parentId : 'BLOCK_0025',
@@ -234,7 +234,7 @@ export async function getTestNoteData(noteId) {
 			noteId,
 			blockType: 'code',
 			position : 1,
-			content  : '메타데이터 영역'
+			content  : '           메타데이터 영역'
 		}, {
 			blockId  : 'BLOCK_0030',
 			parentId : 'BLOCK_0025',
@@ -248,7 +248,7 @@ export async function getTestNoteData(noteId) {
 			noteId,
 			blockType: 'code',
 			position : 1,
-			content  : '목차 영역'
+			content  : '             목차 영역'
 		}, {
 			blockId  : 'BLOCK_0032',
 			parentId : 'BLOCK_0025',
@@ -262,7 +262,7 @@ export async function getTestNoteData(noteId) {
 			noteId,
 			blockType: 'code',
 			position : 1,
-			content  : '노트 블럭 영역          '
+			content  : '           노트 블럭 영역'
 		}, {
 			blockId  : 'BLOCK_0034',
 			parentId : 'BLOCK_0025',
