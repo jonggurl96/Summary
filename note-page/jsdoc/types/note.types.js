@@ -95,6 +95,7 @@
  * @property {BlockTypes} blockType
  * @property {number} position
  * @property {string} content
+ * @property {number} order
  */
 
 /**

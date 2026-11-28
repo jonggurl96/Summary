@@ -74,9 +74,6 @@ export default function App() {
 		dispatch : dispatchEditMode
 	} = useCommonStore(useEditModeStore);
 
-	// const editable = useEditModeStore(state => state.isEditable());
-	const editable = true;
-
 	useEffect(() => {
 		if(editModeIdle)
 			loadEditMode(userId);
@@ -85,8 +82,6 @@ export default function App() {
 	const changeEditMode = (modeId) => {
 		dispatchEditMode({ ...editMode, selected: modeId });
 	};
-
-	const [focusIdx, setFocusIdx] = useState({ blockLine: 0, line: 0, col: 0 });
 
 	/** @type {useState<NoteDetail>} */
 	const [noteData, setNoteData] = useState(null);
@@ -175,8 +170,7 @@ export default function App() {
 								{loadNoteDetailError && <span>에러</span>}
 								{noteDetailLoaded && noteData && noteData.blocks.map((block, index) => (
 									<NoteBlock key={block.blockId}
-									           index={index} editable={editable}
-									           data={block} setData={editBlock => editNoteData(index, editBlock)} />
+									           index={index} data={block} setData={editBlock => editNoteData(index, editBlock)} />
 								))}
 							</div>
 

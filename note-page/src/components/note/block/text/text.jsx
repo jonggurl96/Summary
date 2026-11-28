@@ -1,79 +1,103 @@
 import styles                  from 'components/note/block/text/text.module.css';
 import { useEffect, useRef }   from "react";
 import { useBlockSelectStore } from "stores/note/block/useBlockSelectStore";
+import { useNoteDetailStore }  from "stores/note/detail/useNoteDetailStore";
 
 /**
  *
  * @param props
+ * @param props.id {string}
  * @param props.text {string}
- * @param [props.style] {React.CSSProperties}
+ * @param props.editable {boolean}
+ * @param props.style {React.CSSProperties}
+ * @param props.order {number}
  * @returns {React.JSX.Element}
  * @constructor
  */
-export function TextBlock({ id, index, text, style }) {
+export function TextBlock({ id, text, editable, style, order }) {
 
 	const textareaRef = useRef(null);
 
-	const { selectionCaret, editable, focus, focusNext, focusPrev, focusUp, focusDown, changeCaret } = useBlockSelectStore();
-	const isFocused = useBlockSelectStore(state => state.isFocused(index));
-	const isSelected = useBlockSelectStore(state => state.isSelected(index));
+	const {
+		getPreviousBlockId,
+		getNextBlockId
+	} = useNoteDetailStore();
+
+	const {
+		logicalCaret,
+		visibleCaret,
+		focusBesideBlock,
+		focusBlock,
+		moveCaret,
+		focus
+	} = useBlockSelectStore();
+
+	const isFocused = focusBlock === id;
 
 	const selectHandler = e => {
-		e.preventDefault();
+		if(!isFocused) return;
+		if(e.target.selectionStart === e.target.selectionEnd) {
 
-		/** @type {HTMLTextAreaElement} */
-		const textarea = e.target;
-
-		const caret = selectionCaret > text.length ? text.length : selectionCaret;
-		textarea.setSelectionRange(caret, caret);
+			moveCaret(e.target.selectionEnd);
+		}
 	};
 
 	const keydownHandler = e => {
 		if(!isFocused) return;
 
-		/** @type {HTMLTextAreaElement} */
-		const textarea = e.target;
+		const { selectionStart, selectionEnd } = e.target;
+		if(selectionStart !== selectionEnd) return;
 
 		if(e.key === 'ArrowDown') {
 			e.preventDefault();
-			focusDown();
+			const nextBlockId = getNextBlockId(order);
+			console.log(nextBlockId);
+			focusBesideBlock(nextBlockId, selectionEnd);
 		}
 		else if(e.key === 'ArrowUp') {
 			e.preventDefault();
-			focusUp();
+			const prevBlockId = getPreviousBlockId(order);
+			focusBesideBlock(prevBlockId, selectionEnd);
 		}
-		else if(e.key === 'ArrowLeft') {
-			if(selectionCaret === 0) {
-				e.preventDefault();
-				focusPrev();
-			}
+		else if(['ArrowLeft', 'Backspace'].includes(e.key) && visibleCaret === 0) {
+			e.preventDefault();
+			const prevBlockId = getPreviousBlockId(order);
+			console.log(prevBlockId);
+			focusBesideBlock(prevBlockId, -1);
 		}
-		else if(e.key === 'ArrowRight') {
-			if(text.length === selectionCaret) {
-				e.preventDefault();
-				focusNext();
-			}
+		else if(e.key === 'ArrowRight' && text.length === visibleCaret) {
+			e.preventDefault();
+			const nextBlockId = getNextBlockId(order);
+			console.log(nextBlockId);
+			focusBesideBlock(nextBlockId, 0);
 		}
+
 	};
 
 	useEffect(() => {
 		if(isFocused) {
+			const caret = logicalCaret === -1 ? text.length : visibleCaret;
+			textareaRef.current.setSelectionRange(caret, caret);
 			textareaRef.current.focus();
-			if(selectionCaret === -1) {
-				changeCaret(text.length);
-				return;
-			}
-			textareaRef.current.setSelectionRange(selectionCaret, selectionCaret);
 		}
-	}, [isFocused, selectionCaret, textareaRef, text]);
+	}, [isFocused, textareaRef, logicalCaret, visibleCaret, text]);
+
+	const focusHandler = e => {
+		focus(id);
+		const { selectionStart, selectionEnd } = e.target;
+		if(selectionStart === selectionEnd) {
+			moveCaret(e.target.selectionStart);
+		}
+	};
 
 	return (
 		<textarea ref={textareaRef} rows={1} id={id} className={styles.TextBlock} placeholder="/를 눌러 블럭을 삽입하세요."
 		          autoFocus={true} value={text}
 		          style={style}
-		          onFocus={() => focus(index)}
-			// onSelect={selectHandler}
-			        onKeyDown={keydownHandler}
-			        disabled={!editable} />
+		          onFocus={focusHandler}
+		          onSelect={selectHandler}
+		          onKeyDown={keydownHandler}
+		          onChange={() => {}}
+		          disabled={!editable} />
 	);
 }
